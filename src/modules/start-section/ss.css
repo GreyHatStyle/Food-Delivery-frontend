@@ -1,0 +1,11 @@
+.variable-margin{
+    margin: 0 clamp(0.2rem, 5dvw, 6rem);
+}
+
+.title-quote{
+    font-family: "Baloo Bhai 2", sans-serif;
+    font-weight: 800;
+    /* font-size: clamp(2rem, calc(6dvw + 1rem), 4rem); */
+}
+
+/* @media() */
