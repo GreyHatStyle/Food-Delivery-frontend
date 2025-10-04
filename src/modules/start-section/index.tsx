@@ -1,7 +1,7 @@
 import { Search } from "lucide-react"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "../../components/ui/input-group"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
 import "./ss.css"
-import { Button } from "../../components/ui/button"
+import { Button } from "@/components/ui/button"
 
 function StartSection() {
   return (

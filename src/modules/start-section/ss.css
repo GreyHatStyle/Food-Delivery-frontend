@@ -2,6 +2,10 @@
     margin: 0 clamp(0.2rem, 5dvw, 6rem);
 }
 
+.variable-padding{
+    padding: 1.25rem clamp(0.2rem, 7dvw, 10rem);
+}
+
 .title-quote{
     font-family: "Baloo Bhai 2", sans-serif;
     font-weight: 800;

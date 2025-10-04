@@ -113,6 +113,16 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.allura {
+  font-family: "Allura", cursive;
+  font-style: normal;
+}
+
+.poppins {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
