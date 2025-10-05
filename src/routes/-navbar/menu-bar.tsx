@@ -11,6 +11,10 @@ function Menubar() {
     <div className="flex flex-row gap-5">
         <Button 
         className="px-[2rem]"
+        variant={"ghost"}>Home</Button>
+        
+        <Button 
+        className="px-[2rem]"
         variant={"ghost"}>Help</Button>
         
         <Button 

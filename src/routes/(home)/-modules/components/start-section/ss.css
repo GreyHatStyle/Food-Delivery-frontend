@@ -1,6 +1,4 @@
-.variable-margin{
-    margin: 0 clamp(0.2rem, 5dvw, 6rem);
-}
+
 
 .variable-padding{
     padding: 1.25rem clamp(0.2rem, 7dvw, 10rem);

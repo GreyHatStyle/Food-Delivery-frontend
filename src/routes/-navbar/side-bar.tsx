@@ -1,4 +1,4 @@
-import { ChevronRight, Heart, ShoppingBagIcon, User, UserCog} from "lucide-react"
+import { ChevronRight, Heart, Home, ShoppingBagIcon, User, UserCog} from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface SideBarProps{
@@ -23,6 +23,7 @@ function SideBar({
             <ChevronRight/>
         </button>
 
+        <Button variant={"sideMenu"}><Home/> Home </Button>
         <Button variant={"sideMenu"}><UserCog/> Help </Button>
         <Button variant={"sideMenu"}><User/> Sign In</Button>
         <Button variant={"sideMenu"}><ShoppingBagIcon/> Cart</Button>

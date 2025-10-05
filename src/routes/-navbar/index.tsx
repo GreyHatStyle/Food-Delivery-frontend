@@ -1,5 +1,5 @@
 import { Menu } from "lucide-react"
-import SideBar from "./side-bar"
+import SideBar from "./side-bar";
 import { useState } from "react"
 import { useIsMobile } from "@/hooks/useMobile";
 import Menubar from "./menu-bar";
@@ -11,7 +11,7 @@ function Navbar() {
   
 
   return (
-    <div className="relative variable-padding mb-3 flex flex-row justify-between">
+    <nav className="sticky top-0 z-[100] variable-padding mb-3 flex flex-row justify-between bg-background">
       <button className="poppins font-extrabold text-2xl hover:cursor-pointer">
         Zomiggy
       </button>
@@ -51,7 +51,7 @@ function Navbar() {
     }
     
 
-    </div>
+    </nav>
   )
 }
 

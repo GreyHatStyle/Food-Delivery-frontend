@@ -41,6 +41,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-web-theme-green: var(--website-theme-green);
+  --color-web-theme-ylgn-light: var(--website-theme-ylgn-light);
 }
 
 :root {
@@ -77,6 +78,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --website-theme-green: rgb(84, 135, 118);
+  --website-theme-ylgn-light: rgb(245, 245, 235);
 }
 
 .dark {
