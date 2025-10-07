@@ -1,5 +1,6 @@
 import { H4 } from "@/components/ui/typography"
 import { Link } from "@tanstack/react-router"
+import type { ComponentProps } from "react";
 
 
 type TargetLink = string;
@@ -10,27 +11,27 @@ export type ContentListType = {
 }
 
 export interface ListSetProps{
-  key?: number,
   title: string,
   contentList: ContentListType[],
 }
 
 function ListSet({
-  key,
   title,
   contentList,
-}: ListSetProps) {
+  ...props
+}: ListSetProps & ComponentProps<"div">) {
 
   return (
     <div className="flex flex-col gap-5"
-    key={key}
+    {...props}
     >
         
         <H4>{title}</H4>
 
         {
-          contentList.map((content) => (
+          contentList.map((content, index) => (
             <Link 
+            key={index}
             target="_blank"
             to={content.target}
             className="text-gray-500 cursor-pointer"

@@ -1,22 +1,21 @@
 import { H3 } from '@/components/ui/typography'
-import React from 'react'
+import React, { type ComponentProps } from 'react'
 
 export interface QualityProps{
-    key?: number,
     title: string,
     content: string,
     children: React.ReactNode,
 }
 
 function Quality({
-    key,
     title,
     content,
     children,
-}: QualityProps) {
+    ...props
+}: QualityProps & ComponentProps<"div">) {
 
   return (
-    <div key={key} className='flex flex-col items-center p-[3rem] gap-2'>
+    <div className='flex flex-col items-center p-[3rem] gap-2' {...props}>
 
         <div className='bg-web-theme-ylgn-light h-10 w-10 rounded-full flex justify-center items-center text-web-theme-green'>
             {children}

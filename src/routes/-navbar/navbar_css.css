@@ -1,0 +1,3 @@
+.variable-padding{
+    padding: 1.25rem clamp(0.2rem, 7dvw, 10rem);
+}

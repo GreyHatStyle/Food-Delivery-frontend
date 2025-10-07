@@ -1,24 +1,20 @@
-import { RouterProvider, createRouter } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
+import { RouterProvider } from '@tanstack/react-router'
+import { useGetRouter } from './hooks/useGetRouter'
 
-const router = createRouter({ 
-  routeTree,
-  defaultNotFoundComponent: () => (<div> This page is not found bruh :(</div>) 
-})
-
-// Register the router instance for type safety
+// Registering the router instance for type safety (and vs code suggestions of course)
 declare module '@tanstack/react-router' {
   interface Register {
-    router: typeof router
+    // router: typeof router
+    router: ReturnType<typeof useGetRouter>
   }
 }
 
 function App() {
-
+  const router = useGetRouter();
   
-    return (
-       <RouterProvider router={router} />
-    )
+  return (
+      <RouterProvider router={router} />
+  )
 }
 
 export default App

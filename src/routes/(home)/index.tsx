@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import StartSection from './-modules/components/start-section'
-import SelfQualitySection from './-modules/components/self-qualities'
+import StartSection from './-components/start-section'
+import SelfQualitySection from './-components/self-qualities'
 import "./home.css"
-import MemberShipCard from './-modules/components/membership'
+import MemberShipCard from './-components/membership'
 
 export const Route = createFileRoute('/(home)/')({
   component: RouteComponent,

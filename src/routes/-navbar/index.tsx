@@ -3,6 +3,7 @@ import SideBar from "./side-bar";
 import { useState } from "react"
 import { useIsMobile } from "@/hooks/useMobile";
 import Menubar from "./menu-bar";
+import "./navbar_css.css"
 
 
 function Navbar() {
