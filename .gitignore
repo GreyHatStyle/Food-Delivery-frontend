@@ -23,5 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+# My files
+commits.txt
+TODO.md
+dummy.json
+
 # Env
 .env

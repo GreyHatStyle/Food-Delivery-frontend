@@ -1,0 +1,11 @@
+.restaurant-list-grid{
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+@media (min-width: 800px) {
+    .restaurant-list-grid{
+        grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    }
+}

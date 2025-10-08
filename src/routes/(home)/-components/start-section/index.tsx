@@ -1,8 +1,6 @@
 import "./ss.css"
 import { Button } from "@/components/ui/button"
-import { useQuery } from "@tanstack/react-query";
-import { GetAllCitiesAPI } from "../../-api/get-cities";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 import {
   Command,
@@ -11,44 +9,27 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import { useEffect, useState } from "react";
+
 import { useIsMobile } from "@/hooks/useMobile";
+import { useCitiesQuery } from "../../-queries/cities-query";
+import { useState } from "react";
+import { useCityStore } from "@/store/city-store";
 
 
 function StartSection() {
 
   const [searchBoxOpened, setOpenSearchBox] = useState<boolean>(false);
-  const [cities, setCities] = useState<string[]>([]);
   const [selectedCity, setSelectedCity] = useState<string>("");
-  const isMobile = useIsMobile();
   
-  const {data, isError, error, isSuccess} = useQuery({
-    queryKey: ["cities"],
-    queryFn: GetAllCitiesAPI,
-    staleTime: 60000,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    retry: 2,
-  });
+  const { setCurrentCity, city } = useCityStore(state => state); // To make sure re-render happens in change of variable
+  const { isMobileDevice } = useIsMobile();
+  const {cities} = useCitiesQuery();
 
-
-
-  useEffect( () => {
-    if (isSuccess){
-      toast.success("Server is connected!!!", {
-        theme: "colored",
-      });
-       setCities(data.cities);
-      console.log("Cities: ", data.cities)
-    }
-    else if(isError){
-      toast.error("Server is not working for now :_) kindly switch to static page", {
-        theme: "colored"
-      });
-      console.log(error)
-    }
-  }, [isSuccess, isError, data, error]);
-
+  function press_button(){
+    console.log("pressed button!!: local city: ", selectedCity);
+    setCurrentCity(selectedCity);
+    console.log("Global city: ", city);
+  }
 
   return (
     <div id="start-section" 
@@ -78,7 +59,7 @@ function StartSection() {
 
               <CommandInput 
               input_value={selectedCity}
-              result_count_show={!isMobile ? `${cities.length} cities` : ""}
+              result_count_show={!isMobileDevice ? `${cities.length} cities` : ""}
               onValueChange={ (value) => {
                 setSelectedCity(value);
 
@@ -125,6 +106,7 @@ function StartSection() {
 
           <div className="mt-4 flex flex-col sm:flex-row items-center gap-1 lg:gap-3 xl:gap-5 lg:mt-7">
             <Button 
+            onClick={() => press_button()}
             className="px-8 sm:px-16 sm:py-4 bg-web-theme-green"
             variant={"default"}>Delivery</Button>
             <p className="text-web-theme-green">Or</p>

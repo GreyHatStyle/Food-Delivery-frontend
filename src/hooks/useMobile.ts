@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 const MOBILE_BREAKPOINT = 768
 
-export function useIsMobile(){
+type IsMobileType = {
+  isMobileDevice: boolean
+}
+
+export function useIsMobile(): IsMobileType{
   const [isMobileDevice, setMobileDevice] = useState<boolean>(window.innerWidth < 768)
 
   useEffect( ()=>{
@@ -20,6 +24,6 @@ export function useIsMobile(){
     }
   }, []);
 
-  return isMobileDevice
+  return { isMobileDevice }
 
 }

@@ -1,5 +1,4 @@
-import { Link, type LinkComponent } from '@tanstack/react-router'
-import React from 'react'
+import React, { type ComponentProps } from 'react'
 
 
 export interface SocialSetProps{
@@ -11,19 +10,19 @@ function SocialSet({
     target,
     children: child,
     ...props
-}: SocialSetProps & LinkComponent<"a", string>) {
+}: SocialSetProps & ComponentProps<"a">) {
 
   return (
-    <Link 
+    <a
+    href={target}
     className='bg-white h-9 w-9 rounded-full flex items-center justify-center 
     hover:bg-web-theme-green hover:text-white hover:cursor-pointer'
-    to={target}
     {...props}
     >
 
       {child}
       
-    </Link>
+    </a>
 
   )
 }

@@ -8,7 +8,7 @@ import "./navbar_css.css"
 
 function Navbar() {
   const [sideBarClosed, setCloseSideBar] = useState<boolean>(true);
-  const isMobileDevice = useIsMobile();
+    const { isMobileDevice } = useIsMobile();
   
 
   return (
