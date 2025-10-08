@@ -4,6 +4,8 @@ import "@/routes/restaurants/restaurants.css"
 import { H2 } from "@/components/ui/typography"
 import { useCityStore } from "@/store/city-store"
 
+import RestaurantFilters from "./filters"
+
 type DummyRestaurantType = {
   id: string,
   r_name: string,
@@ -36,7 +38,7 @@ function RestaurantsList() {
     > Restaurants with online food delivery in {city || "Bikaner"}</H2>
 
     <div id="Filters" className="px-5 py-3">
-      All filters
+      <RestaurantFilters />
     </div>
 
     <div className="m-4 restaurant-list-grid justify-items-center md:justify-items-normal">

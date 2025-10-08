@@ -11,7 +11,8 @@ function Menubar() {
     <div className="flex flex-row gap-5">
         <Button 
         className="px-[2rem]"
-        variant={"ghost"}>Home</Button>
+        variant={"ghost"}>
+        </Button>
         
         <Button 
         className="px-[2rem]"
@@ -23,7 +24,7 @@ function Menubar() {
         
         <Tooltip>
         <TooltipTrigger asChild>
-            <Button className="bg-web-theme-green">
+            <Button>
             <ShoppingBagIcon />
             </Button>
         </TooltipTrigger>
@@ -34,7 +35,7 @@ function Menubar() {
 
         <Tooltip>
         <TooltipTrigger asChild>
-            <Button className="bg-web-theme-green">
+            <Button>
             <Heart />
             </Button>
         </TooltipTrigger>

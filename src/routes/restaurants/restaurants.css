@@ -9,3 +9,48 @@
         grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
     }
 }
+
+/* Filter Dialog classes */
+
+.filter-grid-responsive{
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-areas: 
+        "side cont"
+    ;
+}
+
+
+.side{
+    grid-area: side;
+}
+
+.cont{
+    grid-area: cont;
+}
+
+.mobile-accordion{
+    display: none;
+}
+
+@media (max-width: 500px) {
+    .filter-grid-responsive{
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        "side"
+        ;
+    }
+
+    .cont{
+        display: none;
+    }
+
+    .side{
+        display: none;
+    }
+
+    .mobile-accordion{
+        display: block;
+    }
+}
+

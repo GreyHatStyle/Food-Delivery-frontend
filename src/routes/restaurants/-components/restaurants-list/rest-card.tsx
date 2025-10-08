@@ -9,7 +9,7 @@ interface RestaurantCardProps{
     rating: number,
     ratingCount: string,
     cuisines: string[],   
-}
+};
 
 function RestaurantCard({
     image,
@@ -23,7 +23,7 @@ function RestaurantCard({
   return (
     <div 
     className="flex flex-col min-w-[200px] max-w-[320px] p-3 rounded-xl hover:scale-105
-    bg-background cursor-pointer shadow-card"
+    bg-background cursor-pointer shadow-card transition-all"
     {...props}
     >
 

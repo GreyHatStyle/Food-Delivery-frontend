@@ -6,8 +6,9 @@ export type CitiesApiRespType = {
     cities: string[],
 }
 
+const apiUrl = `${env.VITE_PUBLIC_SERVER_URL}/restaurants/api/v1/cities/`;
+
 export const GetAllCitiesAPI = async (): Promise<CitiesApiRespType> => {
-    const apiUrl = `${env.VITE_PUBLIC_SERVER_URL}//restaurants/api/v1/cities/`;
 
     const response = await axios.get<CitiesApiRespType>(apiUrl);
     

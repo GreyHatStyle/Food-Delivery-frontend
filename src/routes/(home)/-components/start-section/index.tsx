@@ -107,7 +107,7 @@ function StartSection() {
           <div className="mt-4 flex flex-col sm:flex-row items-center gap-1 lg:gap-3 xl:gap-5 lg:mt-7">
             <Button 
             onClick={() => press_button()}
-            className="px-8 sm:px-16 sm:py-4 bg-web-theme-green"
+            className="px-8 sm:px-16 sm:py-4"
             variant={"default"}>Delivery</Button>
             <p className="text-web-theme-green">Or</p>
             <Button 
