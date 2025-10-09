@@ -9,68 +9,117 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RestaurantsIndexRouteImport } from './routes/restaurants/index'
-import { Route as homeIndexRouteImport } from './routes/(home)/index'
+import { Route as RestaurantsLayoutRouteImport } from './routes/restaurants/layout'
+import { Route as homePageRouteImport } from './routes/(home)/page'
+import { Route as RestaurantsFiltersPageRouteImport } from './routes/restaurants/filters/page'
+import { Route as RestaurantsmainPagePageRouteImport } from './routes/restaurants/(main-page)/page'
 
-const RestaurantsIndexRoute = RestaurantsIndexRouteImport.update({
-  id: '/restaurants/',
-  path: '/restaurants/',
+const RestaurantsLayoutRoute = RestaurantsLayoutRouteImport.update({
+  id: '/restaurants',
+  path: '/restaurants',
   getParentRoute: () => rootRouteImport,
 } as any)
-const homeIndexRoute = homeIndexRouteImport.update({
+const homePageRoute = homePageRouteImport.update({
   id: '/(home)/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RestaurantsFiltersPageRoute = RestaurantsFiltersPageRouteImport.update({
+  id: '/filters/',
+  path: '/filters/',
+  getParentRoute: () => RestaurantsLayoutRoute,
+} as any)
+const RestaurantsmainPagePageRoute = RestaurantsmainPagePageRouteImport.update({
+  id: '/(main-page)/',
+  path: '/',
+  getParentRoute: () => RestaurantsLayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof homeIndexRoute
-  '/restaurants': typeof RestaurantsIndexRoute
+  '/restaurants': typeof RestaurantsLayoutRouteWithChildren
+  '/': typeof homePageRoute
+  '/restaurants/': typeof RestaurantsmainPagePageRoute
+  '/restaurants/filters': typeof RestaurantsFiltersPageRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof homeIndexRoute
-  '/restaurants': typeof RestaurantsIndexRoute
+  '/': typeof homePageRoute
+  '/restaurants': typeof RestaurantsmainPagePageRoute
+  '/restaurants/filters': typeof RestaurantsFiltersPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(home)/': typeof homeIndexRoute
-  '/restaurants/': typeof RestaurantsIndexRoute
+  '/restaurants': typeof RestaurantsLayoutRouteWithChildren
+  '/(home)/': typeof homePageRoute
+  '/restaurants/(main-page)/': typeof RestaurantsmainPagePageRoute
+  '/restaurants/filters/': typeof RestaurantsFiltersPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/restaurants'
+  fullPaths: '/restaurants' | '/' | '/restaurants/' | '/restaurants/filters'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/restaurants'
-  id: '__root__' | '/(home)/' | '/restaurants/'
+  to: '/' | '/restaurants' | '/restaurants/filters'
+  id:
+    | '__root__'
+    | '/restaurants'
+    | '/(home)/'
+    | '/restaurants/(main-page)/'
+    | '/restaurants/filters/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  homeIndexRoute: typeof homeIndexRoute
-  RestaurantsIndexRoute: typeof RestaurantsIndexRoute
+  RestaurantsLayoutRoute: typeof RestaurantsLayoutRouteWithChildren
+  homePageRoute: typeof homePageRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/restaurants/': {
-      id: '/restaurants/'
+    '/restaurants': {
+      id: '/restaurants'
       path: '/restaurants'
       fullPath: '/restaurants'
-      preLoaderRoute: typeof RestaurantsIndexRouteImport
+      preLoaderRoute: typeof RestaurantsLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(home)/': {
       id: '/(home)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof homeIndexRouteImport
+      preLoaderRoute: typeof homePageRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/restaurants/filters/': {
+      id: '/restaurants/filters/'
+      path: '/filters'
+      fullPath: '/restaurants/filters'
+      preLoaderRoute: typeof RestaurantsFiltersPageRouteImport
+      parentRoute: typeof RestaurantsLayoutRoute
+    }
+    '/restaurants/(main-page)/': {
+      id: '/restaurants/(main-page)/'
+      path: '/'
+      fullPath: '/restaurants/'
+      preLoaderRoute: typeof RestaurantsmainPagePageRouteImport
+      parentRoute: typeof RestaurantsLayoutRoute
     }
   }
 }
 
+interface RestaurantsLayoutRouteChildren {
+  RestaurantsmainPagePageRoute: typeof RestaurantsmainPagePageRoute
+  RestaurantsFiltersPageRoute: typeof RestaurantsFiltersPageRoute
+}
+
+const RestaurantsLayoutRouteChildren: RestaurantsLayoutRouteChildren = {
+  RestaurantsmainPagePageRoute: RestaurantsmainPagePageRoute,
+  RestaurantsFiltersPageRoute: RestaurantsFiltersPageRoute,
+}
+
+const RestaurantsLayoutRouteWithChildren =
+  RestaurantsLayoutRoute._addFileChildren(RestaurantsLayoutRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  homeIndexRoute: homeIndexRoute,
-  RestaurantsIndexRoute: RestaurantsIndexRoute,
+  RestaurantsLayoutRoute: RestaurantsLayoutRouteWithChildren,
+  homePageRoute: homePageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

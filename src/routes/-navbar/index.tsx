@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useIsMobile } from "@/hooks/useMobile";
 import Menubar from "./menu-bar";
 import "./navbar_css.css"
+import { Link } from "@tanstack/react-router";
 
 
 function Navbar() {
@@ -13,9 +14,15 @@ function Navbar() {
 
   return (
     <nav className="sticky top-0 z-[100] variable-padding mb-3 flex flex-row justify-between bg-background">
-      <button className="poppins font-extrabold text-2xl hover:cursor-pointer">
+      {/* <button className="poppins font-extrabold text-2xl hover:cursor-pointer">
         Zomiggy
-      </button>
+      </button> */}
+
+      <Link 
+      to="/"
+      className="poppins font-extrabold text-2xl hover:cursor-pointer">
+        Zomiggy
+      </Link>
 
       {
         !isMobileDevice && 

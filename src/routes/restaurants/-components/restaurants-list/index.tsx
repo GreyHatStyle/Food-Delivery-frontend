@@ -1,10 +1,8 @@
 import RestaurantCard from "./rest-card"
 import dummyData from "../../dummy.json"
 import "@/routes/restaurants/restaurants.css"
-import { H2 } from "@/components/ui/typography"
-import { useCityStore } from "@/store/city-store"
+import type { GetRestaurantFromCityApiResponse } from "../../filters/-api"
 
-import RestaurantFilters from "./filters"
 
 type DummyRestaurantType = {
   id: string,
@@ -24,22 +22,29 @@ type DummyDataType = {
   results: DummyRestaurantType[],
 }
 
-function RestaurantsList() {
-  const myData: DummyDataType = dummyData as DummyDataType;
-  const { city } = useCityStore(state => state);
+interface RestaurantsListProps{
+  restaurantsApiData?: GetRestaurantFromCityApiResponse
+}
 
+function RestaurantsList({
+  restaurantsApiData,
+}: RestaurantsListProps) {
+  
+  let myData = null;
+  
+  if (restaurantsApiData){
+    myData = restaurantsApiData;
+  }
+  else{
+    myData = dummyData as DummyDataType;
+  }
+
+  
   return (
     <div
-    className="bg-green-50 rounded-md p-4"
+    className=""
     >
     
-    <H2 
-    className="p-5 poppins"
-    > Restaurants with online food delivery in {city || "Bikaner"}</H2>
-
-    <div id="Filters" className="px-5 py-3">
-      <RestaurantFilters />
-    </div>
 
     <div className="m-4 restaurant-list-grid justify-items-center md:justify-items-normal">
       {

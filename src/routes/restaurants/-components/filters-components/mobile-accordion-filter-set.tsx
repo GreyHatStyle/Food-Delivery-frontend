@@ -39,10 +39,7 @@ export function MobileAccordionFilterSet({
             isAccordion
             />
 
-            <p>
-              Key features include advanced processing capabilities, and an
-              intuitive user interface designed for both beginners and experts.
-            </p>
+            
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
@@ -51,10 +48,7 @@ export function MobileAccordionFilterSet({
             
           <AvgCostFilter isAccordion />
 
-            <p>
-              All orders are carefully packaged and fully insured. Track your
-              shipment in real-time through our dedicated tracking portal.
-            </p>
+            
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3">
@@ -63,11 +57,7 @@ export function MobileAccordionFilterSet({
             
             <RatingCountFilter isAccordion />
 
-            <p>
-              Our hassle-free return process includes free return shipping and
-              full refunds processed within 48 hours of receiving the returned
-              item.
-            </p>
+          
           </AccordionContent>
         </AccordionItem>
 
@@ -79,11 +69,7 @@ export function MobileAccordionFilterSet({
             isAccordion
             />
 
-            <p>
-              Our hassle-free return process includes free return shipping and
-              full refunds processed within 48 hours of receiving the returned
-              item.
-            </p>
+            
           </AccordionContent>
         </AccordionItem>
       </Accordion>

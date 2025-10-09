@@ -16,8 +16,8 @@ export function FilterButton({
     
     return (
         <button 
-        className={cn(`py-4 mr-4  hover:bg-neutral-100 rounded-md cursor-pointer font-semibold poppins
-         ${isSelected ? "border-green-600 border-l-4 bg-neutral-200 hover:bg-neutral-200" : ""}
+        className={cn(`py-4 mr-4  hover:bg-web-theme-green/40 rounded-md cursor-pointer font-semibold poppins
+         ${isSelected ? "border-teal-700 border-l-4 bg-web-theme-green/30 hover:bg-web-theme-green/30" : ""}
         `)}
         {...props}
         >

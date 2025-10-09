@@ -14,6 +14,7 @@ import { useIsMobile } from "@/hooks/useMobile";
 import { useCitiesQuery } from "../../-queries/cities-query";
 import { useState } from "react";
 import { useCityStore } from "@/store/city-store";
+import { Link } from "@tanstack/react-router";
 
 
 function StartSection() {
@@ -21,15 +22,15 @@ function StartSection() {
   const [searchBoxOpened, setOpenSearchBox] = useState<boolean>(false);
   const [selectedCity, setSelectedCity] = useState<string>("");
   
-  const { setCurrentCity, city } = useCityStore(state => state); // To make sure re-render happens in change of variable
+  const { setCurrentCity } = useCityStore(state => state); // To make sure re-render happens in change of variable
   const { isMobileDevice } = useIsMobile();
   const {cities} = useCitiesQuery();
 
-  function press_button(){
-    console.log("pressed button!!: local city: ", selectedCity);
-    setCurrentCity(selectedCity);
-    console.log("Global city: ", city);
-  }
+  // function press_button(){
+  //   console.log("pressed button!!: local city: ", selectedCity);
+  //   setCurrentCity(selectedCity);
+  //   console.log("Global city: ", city);
+  // }
 
   return (
     <div id="start-section" 
@@ -105,10 +106,25 @@ function StartSection() {
 
 
           <div className="mt-4 flex flex-col sm:flex-row items-center gap-1 lg:gap-3 xl:gap-5 lg:mt-7">
-            <Button 
+            {/* <Button 
             onClick={() => press_button()}
             className="px-8 sm:px-16 sm:py-4"
-            variant={"default"}>Delivery</Button>
+            variant={"default"}>Delivery</Button> */}
+
+            <Link to="/restaurants/filters"
+            onClick={() => setCurrentCity(selectedCity)}
+            className="px-8 sm:px-16 sm:py-1.5 bg-web-theme-green rounded-full text-white"
+            search={{
+              city: selectedCity,
+              pageOffset: 0,
+              pageLimit: 10
+            }}
+            >
+              
+              Delivery
+              
+              </Link>
+
             <p className="text-web-theme-green">Or</p>
             <Button 
             className="px-8 sm:px-16 sm:py-4 bg-transparent border-2 border-web-theme-green text-web-theme-green hover:bg-white"
