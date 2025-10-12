@@ -1,13 +1,13 @@
 import {z} from "zod"
 import {create } from "zustand"
 
-const allowedFields = ["rating", "rating_count_int", "avg_cost"] as const;
+const allowedFields = ["city", "rating", "rating_count_int", "avg_cost"] as const;
 type AllowedFieldsType = typeof allowedFields[number];
 
-const allowedNonLookupFields = ["city", "limit", "offset", "cuisine",] as const;
+const allowedNonLookupFields = ["limit", "offset", "cuisine",] as const;
 type AllowedNonLookupFieldType = typeof allowedNonLookupFields[number];
 
-const allowedLookups = ["lte", "gte", "exact"] as const;
+const allowedLookups = ["lte", "gte", "iexact"] as const;
 type AllowedLookupType = typeof allowedLookups[number];
 
 const allowedCuisines = ["North Indian", "South Indian", "Chinese", "Pizzas", "Sweets",  "American", "Bakery", "Desserts"];
@@ -21,8 +21,8 @@ export const SearchQuerySchema = z.record(z.string(), ValueQuerySchema)
                                     
                                     const [baseField, lookup] = key.split("__");
                                     
-                                    console.log("Base field: ", baseField);
-                                    console.log("Lookup: ", lookup);
+                                    // console.log("Base field: ", baseField);
+                                    // console.log("Lookup: ", lookup);
 
 
                                     if(!baseField) return false;
@@ -47,7 +47,7 @@ export const SearchQuerySchema = z.record(z.string(), ValueQuerySchema)
                                         if(!value.trim()) return false;
 
                                         const cuisineValues = value.split(',');
-                                        console.log("Cuisine value after split: ", cuisineValues);
+                                        // console.log("Cuisine value after split: ", cuisineValues);
 
                                         return cuisineValues.every( cuisine => {
                                             const cuisineTrim = cuisine.trim();
@@ -64,6 +64,6 @@ export const SearchQuerySchema = z.record(z.string(), ValueQuerySchema)
 
 
 
-type RestaurantsFilterStoreType2 = z.infer<typeof SearchQuerySchema>
+export type RestaurantsFilterStoreType2 = z.infer<typeof SearchQuerySchema>
 
-// Testing sting: http://192.168.56.1:5173/restaurants/filters?city=Dehradun&rating__gte=3.5&limit=10&offset=10&cuisine=North%20Indian,South%20Indian&rating_count_int__gte=300&avg_cost__lte=300&avg_cost__gte=300&avg_cost__lte=600&rating__gte=4.5
+// Testing sting:  http://192.168.208.139:5173/restaurants/filters?city__iexact=Dehradun&rating__gte=3.5&limit=10&offset=10&cuisine=North%20Indian,South%20Indian&rating_count_int__gte=300&avg_cost__lte=300&avg_cost__gte=300&avg_cost__lte=600&rating__gte=4.5

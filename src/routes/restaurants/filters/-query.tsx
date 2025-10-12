@@ -7,29 +7,14 @@ import { useRestaurantFilterStore } from "@/store/restaurant-filter-store";
 
 
 
-export const useRestaurantsQuery = ({
-    city,
-    pageLimit,
-    pageOffset,
-    searchQueryByParent,
-}: QueryParamsType & {searchQueryByParent: string}) => {
+export const useRestaurantsQuery = (decodedQueryString: string) => {
 
   const [receivedData, setReceivedData] = useState<GetRestaurantFromCityApiResponse>();
-  const { finalQuery } = useRestaurantFilterStore();
-
-  console.log("Search Query By parent: ", searchQueryByParent);
-  console.log("Final query recieved (zustand): ", finalQuery);
-
   
 
   const {data, isError, error, isSuccess, isLoading} = useQuery({
     queryKey: ["restaurants"],
-    queryFn: () => getRestaurantsFromCity({
-        city: city,
-        pageLimit: pageLimit,
-        pageOffset: pageOffset,
-        finalSearchQuery: searchQueryByParent,
-    }),
+    queryFn: () => getRestaurantsFromCity(decodedQueryString),
     refetchOnMount: true,
     retry: 2,
   });

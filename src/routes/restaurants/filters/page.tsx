@@ -1,19 +1,50 @@
-import { createFileRoute, useLocation } from '@tanstack/react-router'
-import { useRestaurantFilterStore } from "@/store/restaurant-filter-store"
+import { createFileRoute } from '@tanstack/react-router'
 import { SearchQuerySchema } from "@/store/restaurant-filter-zod"
 import RestaurantsList from '../-components/restaurants-list'
-import { useRestaurantsQuery } from './-query'
 import { ToastContainer } from 'react-toastify'
-import { useEffect } from 'react'
 import { H3 } from '@/components/ui/typography'
+import { useRestaurantsQuery } from './-query'
 
-type RatingType = "3.5+" | "4.0+" | "4.5+"
 
 export type QueryParamsType = {
   city: string,
-  rating?: RatingType,
-  pageOffset: number,
-  pageLimit: number,
+  limit: number,
+  offset: number,
+  rating__gte?: number | number[],
+  rating__lte?: number | number[],
+  cuisine?: string,
+  rating_count_int__gte: number,
+  avg_cost__lte: number | number[],
+  avg_cost__gte: number | number[],
+}
+
+const buildSearchQuery = (validatedObj: Record<string, unknown> | undefined): string =>{
+  if(typeof validatedObj === "undefined") return "";
+
+  const params = new URLSearchParams();
+
+  Object.entries(validatedObj).forEach( ([key, value]) => {
+    if(value === undefined || value === null) return "";
+    
+    if(Array.isArray(value)){
+
+      if(key === "cuisine"){
+        params.append(key, value.join(','));
+      }
+
+      else{
+        // append like normally (to deal with "rating__gte=3.5,4.5" format)
+        value.forEach( (val) => {
+          params.append(key, val.toString());
+        });
+      }
+    }
+    else{
+      params.append(key, value.toString());
+    }
+  });
+
+  return params.toString();
 }
 
 
@@ -26,14 +57,6 @@ export const Route = createFileRoute('/restaurants/filters/')({
 
 function RouteComponent() {
   
-  // const {city, rating, pageLimit, pageOffset } = Route.useSearch();
-
-  // const { searchQueryDecodeAndSet, buildFinalQuery, ratings, finalQuery, cuisines, ratingCounts } = useRestaurantFilterStore(state => state);
-  
-  // 
-  const { searchStr } = useLocation();
-  const decodedSearchStr = decodeURIComponent(searchStr);
-  
   const currentUrlObj = Route.useSearch();
 
   if(!Object.keys(currentUrlObj).includes("limit")) currentUrlObj.limit = "10";
@@ -44,57 +67,45 @@ function RouteComponent() {
   const validationResult = SearchQuerySchema.safeParse(currentUrlObj);
 
   console.log("validation results: ", validationResult);
-
   
-  // Hopefully this should set the store with new params
-  // useEffect(() => {
-  //   // const originalState = {...useRestaurantFilterStore.getState() };
-  //   console.log("Query is setting in Zustand: ", decodedSearchStr);
-
-  //   if(decodedSearchStr){
-  //     searchQueryDecodeAndSet(decodedSearchStr);
-  //     buildFinalQuery();
-  //   }
-
-
-  // }, [decodedSearchStr]);
+  const paramStringValidation = buildSearchQuery(validationResult.data);
+  
 
   // console.log("Cuisines: ", cuisines);
 
   // const navigate = useNavigate({from: Route.fullPath});
 
-  // const {receivedData, isLoading} = useRestaurantsQuery({
-  //   city: city,
-  //   pageLimit: pageLimit,
-  //   pageOffset: pageOffset,
-  //   searchQueryByParent: decodedSearchStr,
-  // });
+  const {receivedData, isLoading} = useRestaurantsQuery(decodeURIComponent(paramStringValidation));
   
   
   return <div>
     <ToastContainer theme='colored' />
 
     {
-      // isLoading ? (
-      //   <div>Loading Restaurants...</div>
-      // )
-      // :
-      // (
-      //   <RestaurantsList restaurantsApiData={receivedData} />
-      // )
+      isLoading ? (
+        <div>Loading Restaurants...</div>
+      )
+      :
+      (
+        <RestaurantsList restaurantsApiData={receivedData} />
+      )
 
     }
 
     {
-      <>
-      <pre>{decodedSearchStr}</pre>
-      <H3>The json from Use search</H3>
-      <pre>{JSON.stringify(currentUrlObj, null, 4, )}</pre>
-      </>
+    //   <>
+    //   <H3>The json from Use search</H3>
+    //   <pre>{JSON.stringify(currentUrlObj, null, 4, )}</pre>
+
+    //   <H3>Validated Zod object</H3>
+    // <pre>{JSON.stringify(validationResult, null, 4)}</pre>
+
+    //  <H3>Validated zod object search query</H3>
+    //  <p>{decodeURIComponent(paramStringValidation)}</p> 
+    //   </>
     }
 
-    <H3>Validated Zod object</H3>
-    <pre>{JSON.stringify(validationResult, null, 4)}</pre>
+    
     
   </div>
 }

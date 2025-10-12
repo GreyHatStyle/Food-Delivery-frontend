@@ -115,9 +115,7 @@ function StartSection() {
             onClick={() => setCurrentCity(selectedCity)}
             className="px-8 sm:px-16 sm:py-1.5 bg-web-theme-green rounded-full text-white"
             search={{
-              city: selectedCity,
-              pageOffset: 0,
-              pageLimit: 10
+              city__iexact: `${selectedCity}`,
             }}
             >
               
