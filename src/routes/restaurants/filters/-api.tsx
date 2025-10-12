@@ -21,21 +21,25 @@ export type GetRestaurantFromCityApiResponse = {
 }
 
 type GetRestaurantsFromCityInputType = {
-    searchQuery: string,
+  finalSearchQuery: string,
 } & QueryParamsType
 
 const apiUrl = env.VITE_PUBLIC_SERVER_URL;
 
 export const getRestaurantsFromCity = async ({
-    searchQuery,
     city,
     pageLimit,
-    pageOffset
+    pageOffset,
+    finalSearchQuery,
 }: GetRestaurantsFromCityInputType): Promise<GetRestaurantFromCityApiResponse> => {
     
-    console.log("Search QUery: ", searchQuery);
+    console.log("page limit: ", pageLimit);
+    console.log("pageOffset: ", pageOffset);
 
-    const finalApiUrl = `${apiUrl}/restaurants/api/v1/restaurants/?city=${city}&ordering=-rating&ordering=-rating_count_int&offset=${pageOffset}&limit=${pageLimit}`;
+    
+    const finalApiUrl = `${apiUrl}/restaurants/api/v1/restaurants/?city=${city}&ordering=-rating&ordering=-rating_count_int&offset=0&limit=10&${finalSearchQuery}`;
+
+    console.log("Final selected API URL: ", finalApiUrl);
 
     const response = await axios.get<GetRestaurantFromCityApiResponse>(finalApiUrl);
 

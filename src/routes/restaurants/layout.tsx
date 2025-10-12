@@ -3,7 +3,7 @@ import "@/index.css"
 import { H2 } from '@/components/ui/typography'
 import RestaurantFilters from './-components/filters-components'
 import { useCityStore } from '@/store/city-store'
-import RestaurantsList from './-components/restaurants-list'
+
 
 export const Route = createFileRoute('/restaurants')({
   component: LayoutComponent,
@@ -21,9 +21,6 @@ function LayoutComponent() {
       <div id="Filters" className="px-5 py-3">
         <RestaurantFilters />
       </div>
-
-
-      {/* <RestaurantsList /> */}
       
       <Outlet />
     </div>

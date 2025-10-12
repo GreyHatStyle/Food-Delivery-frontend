@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import { getRestaurantsFromCity, type GetRestaurantFromCityApiResponse } from "./-api";
 import type { QueryParamsType } from "./page";
+import { useRestaurantFilterStore } from "@/store/restaurant-filter-store";
 
 
 
@@ -10,10 +11,16 @@ export const useRestaurantsQuery = ({
     city,
     pageLimit,
     pageOffset,
-    searchQuery,
-}: QueryParamsType & {searchQuery: string}) => {
+    searchQueryByParent,
+}: QueryParamsType & {searchQueryByParent: string}) => {
 
   const [receivedData, setReceivedData] = useState<GetRestaurantFromCityApiResponse>();
+  const { finalQuery } = useRestaurantFilterStore();
+
+  console.log("Search Query By parent: ", searchQueryByParent);
+  console.log("Final query recieved (zustand): ", finalQuery);
+
+  
 
   const {data, isError, error, isSuccess, isLoading} = useQuery({
     queryKey: ["restaurants"],
@@ -21,7 +28,7 @@ export const useRestaurantsQuery = ({
         city: city,
         pageLimit: pageLimit,
         pageOffset: pageOffset,
-        searchQuery: searchQuery,
+        finalSearchQuery: searchQueryByParent,
     }),
     refetchOnMount: true,
     retry: 2,
@@ -41,7 +48,7 @@ export const useRestaurantsQuery = ({
 
   useEffect(() => {
     if (isError) {
-      toast.error("Server is not working for now :_) kindly switch to static page", {
+      toast.error("Server is not working for now :_), Showing Static page instead", {
         theme: "colored"
       });
       console.log(error);
