@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import { getRestaurantsFromCity, type GetRestaurantFromCityApiResponse } from "./-api";
 import type { QueryParamsType } from "./page";
-import { useRestaurantFilterStore } from "@/store/restaurant-filter-store";
 
 
 

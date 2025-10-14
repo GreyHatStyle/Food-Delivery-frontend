@@ -1,155 +1,104 @@
 /**
- * ## This store is too strict and value based won't be able to find the rating if user even ask for 3.6
- * Need to deal with this issue in future.. for now it will work
+This is the file which will mainly be used to setup and access the filters
  */
 
 import { create } from "zustand"
 
-
-export type RatingFilterType = "rating__gte=3.5" | "rating__gte=4" | "rating__gte=4.5"
-
-export type AvgCostFilterType = "avg_cost__lte=300" | "avg_cost__gte=300&avg_cost__lte=600" | "avg_Cost__gte=600" | ""
-
-export type RatingCountFilterType = "rating_count_int__gte=100" | "rating_count_int__gte=500" | "rating_count_int__gte=1000" | "rating_count_int__gte=1500"
-
-export type CuisineFilterType = "North Indian" | "South Indian" | "Chinese" | "Pizzas" | "Sweets" |  "American" | "Bakery" | "Desserts"
-
-
-type RestaurantsFilterStoreType = {
-    ratings: RatingFilterType[],
-    avgCost: AvgCostFilterType,
-    ratingCounts: RatingCountFilterType[],
-    cuisines: CuisineFilterType[],
-    finalQuery: string,
-
-    setRatings: (vals: RatingFilterType[]) => void,
-    setAvgCost: (val: AvgCostFilterType) => void,
-    setRatingCounts: (vals: RatingCountFilterType[]) => void,
-    setCuisines: (vals: CuisineFilterType[]) => void,
-
-    searchQueryDecodeAndSet: (query: string) => void,
-    buildFinalQuery: () => void,
+// Doing avg_cost as number array (might regret it)
+export type QueryParamsType = {
+  city__iexact: string,
+  limit: number,
+  offset: number,
+  rating__gte?: number | number[],
+  rating_count_int__gte?: number,
+  avg_cost__lte?: number[],
+  avg_cost__gte?: number[],
+  cuisine?: string[],
 }
 
-function isCuisineType(cuisine: string): cuisine is CuisineFilterType {
-    return ['North Indian', 'South Indian', 'Chinese', 'Pizzas', 
-            'Sweets', 'American', 'Bakery', 'Desserts'].includes(cuisine);
-}
 
-export const useRestaurantFilterStore = create<RestaurantsFilterStoreType>()(
-    ((set, get) => ({
-        ratings: [],
-        avgCost: "",
-        ratingCounts: [],
-        cuisines: [],
-        finalQuery: "",
+export type RestaurantFilterQueryParamStoreType = {
+  setFilter: <K extends keyof QueryParamsType>(
+    key: K,
+    value: QueryParamsType[K] // QueryParamType["city__iexact"] = "string" (generic example)
+  ) => void;
 
-        setRatings: (vals: RatingFilterType[]) => set( (state) => ({
-            ratings: state.ratings.concat(vals),
-        })),
+  toggleFilter: <K extends keyof Omit<QueryParamsType, "cuisine">>(
+    key: K,
+    value: unknown,
+  ) => void;
 
-        setAvgCost: (val: AvgCostFilterType) => set({ avgCost: val}),
+  toggleCuisine: <K extends keyof Pick<QueryParamsType, "cuisine">>(
+    key: K,
+    value: string,
+  ) => void
 
-        setRatingCounts: (vals: RatingCountFilterType[]) => set( (state) => ({
-            ratingCounts: state.ratingCounts.concat(vals),
-        })),
+} & QueryParamsType;
 
-        setCuisines: (vals: CuisineFilterType[]) => set((state) => ({
-            cuisines: state.cuisines.concat(vals),
-        })),
+export const useRestaurantFilterStore2 = create<RestaurantFilterQueryParamStoreType>()(
+    ((set) => ({
+        city__iexact: "",
+        limit: 0,
+        offset: 10,
 
-        searchQueryDecodeAndSet: (query: string) => {
-            
-            if(!query) return;
-
-            const params = new URLSearchParams(query);
-            
-            
-            const ratingToSet: RatingFilterType[] = [];
-            if (params.has('rating__gte')){
-                const ratingValue = params.get('rating__gte');
-                if(ratingValue === '3.5') ratingToSet.push("rating__gte=3.5")
-                if(ratingValue === '4.0') ratingToSet.push("rating__gte=4")
-                if(ratingValue === '4.5') ratingToSet.push("rating__gte=4.5")
-            }
-
-
-            let avgCostToSet: AvgCostFilterType = "";
-            if (params.has("avg_cost__gte") && params.has("avg_cost__lte")){
-                avgCostToSet = "avg_cost__gte=300&avg_cost__lte=600";
-            }
-            else if (params.has("avg_cost__gte")){
-                avgCostToSet = "avg_Cost__gte=600";
-            }
-            else if(params.has("avg_cost__lte")){
-                avgCostToSet = "avg_cost__lte=300";
-            }
-
-
-            const ratingCountsToSet: RatingCountFilterType[] = [];
-            if (params.has("rating_count_int__gte")){
-                const countVal = params.get("rating_count_int__gte");
-                
-                if(countVal === "100") ratingCountsToSet.push("rating_count_int__gte=100")
-                if(countVal === "500") ratingCountsToSet.push("rating_count_int__gte=500")
-                if(countVal === "1000") ratingCountsToSet.push("rating_count_int__gte=1000")
-                if(countVal === "1500") ratingCountsToSet.push("rating_count_int__gte=1500")
-            }
-
-            const cuisinesToSet: CuisineFilterType[] = []
-            if(params.has("cuisine")){
-                const cuisineValues = params.get("cuisine");
-                
-                if(cuisineValues){
-                    const cuisinesList = cuisineValues.split(",");
-
-                    cuisinesList.forEach( cuisine => {
-                        if(isCuisineType(cuisine)){
-                            cuisinesToSet.push(cuisine);
-                        }
-                    });
-                }
-            }
-
-
-            // The final set where all values meet :)
-            set({
-                ratings: ratingToSet,
-                avgCost: avgCostToSet,
-                ratingCounts: ratingCountsToSet,
-                cuisines: cuisinesToSet,
-            });
+        setFilter: (key, value) => {
+          set( { 
+            [key] : value
+          });
         },
 
+        toggleFilter: (key, value) => {
+          
+          set((state) => {
+            const currentValArray = state[key];
 
-
-        buildFinalQuery: () => {
-            let finalQuery = "";
-
-            if(get().ratings.length > 0){
-                finalQuery += get().ratings.join("&");
-            }
-            
-            if(get().avgCost){
-                if (finalQuery) finalQuery += "&";
-                finalQuery += get().avgCost;
+            if(currentValArray === undefined){
+              return {
+                [key]: [value],
+              }
             }
 
-            if(get().ratingCounts.length > 0){
-                if (finalQuery) finalQuery += "&";
-                finalQuery += get().ratingCounts.join("&");
+            if (Array.isArray(currentValArray)){
+
+              if(currentValArray.includes(value as number)){
+                // basically removing the current value (for toggle)
+                return {
+                  [key]: currentValArray.filter(item => item !== value),
+                };
+              }
+              
+              return { 
+                [key]: [...currentValArray, value as number],
+              }
+
             }
 
-            if(get().cuisines.length > 0){
-                if (finalQuery) finalQuery += "&";
-                finalQuery += get().cuisines.map(
-                    (cuisine: CuisineFilterType) => `cuisine=${encodeURIComponent(cuisine)}`
-                ).join("&");
+            return {
+              [key]: [currentValArray, value],
             }
-            
-            set({
-                finalQuery: finalQuery,
-            })
+          })
+        },
+        
+        toggleCuisine: (key, value:string) => {
+          set((state) => {
+            const currentValArr = state[key];
+
+            if(currentValArr === undefined){
+              return {
+                [key]: [value],
+              }
+            }
+
+            if(currentValArr.includes(value)){
+              return {
+                [key]: currentValArr.filter(item => item !== value),
+              };
+            }
+
+            return {
+              [key]: [...currentValArr, value],
+            }
+          })
         }
         
     }))

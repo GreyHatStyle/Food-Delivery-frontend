@@ -1,6 +1,8 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import type { FilterSection } from "."
 import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { useRestaurantFilterStore2 } from "@/store/restaurant-filter-store"
 
 
 interface RatingCountFilterProps{
@@ -11,6 +13,9 @@ function RatingCountFilter({
     filterSection,
     isAccordion,
 }: RatingCountFilterProps) {
+
+    const {rating_count_int__gte, setFilter} = useRestaurantFilterStore2(state => state);
+
   return (
     <div
     id="rating-count-filter"
@@ -21,28 +26,37 @@ function RatingCountFilter({
     >
         
         <b>FILTER BY</b>
-        
-        <div className="inline-flex gap-2">
-            <Checkbox
-            id="rating100"
-            name="rating100"/>
-            <Label htmlFor="rating100">100+ Ratings</Label>
-        </div>
-        
-        <div className="inline-flex gap-2">
-            <Checkbox
-            id="rating500"
-            name="rating500"/>
-            <Label htmlFor="rating500">500+ Ratings</Label>
-        </div>
-        
-        <div className="inline-flex gap-2">
-            <Checkbox
-            id="rating1000"
-            name="rating1000"/>
-            <Label htmlFor="rating1000">1000+ Ratings</Label>
-        </div>
+        <RadioGroup defaultValue="rating-count-filter">
+            <div className="inline-flex gap-2">
+                <RadioGroupItem
+                id="rating100" value="rating100"
+                
+                checked={rating_count_int__gte === 100}
+                onClick={() => setFilter("rating_count_int__gte", 100)}
+                />
+                <Label htmlFor="rating100">100+ Ratings</Label>
+            </div>
+            
+            <div className="inline-flex gap-2">
+                <RadioGroupItem
+                id="rating500" value="rating500"
 
+                checked={rating_count_int__gte === 500}
+                onClick={() => setFilter("rating_count_int__gte", 500)}
+                />
+                <Label htmlFor="rating500">500+ Ratings</Label>
+            </div>
+            
+            <div className="inline-flex gap-2">
+                <RadioGroupItem
+                id="rating1000" value="rating1000"
+
+                checked={rating_count_int__gte === 1000}
+                onClick={() => setFilter("rating_count_int__gte", 1000)}
+                />
+                <Label htmlFor="rating1000">1000+ Ratings</Label>
+            </div>
+        </RadioGroup>
         
         
     </div>

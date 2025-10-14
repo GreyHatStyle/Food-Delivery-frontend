@@ -4,19 +4,10 @@ import RestaurantsList from '../-components/restaurants-list'
 import { ToastContainer } from 'react-toastify'
 import { H3 } from '@/components/ui/typography'
 import { useRestaurantsQuery } from './-query'
+import { useEffect, useState } from 'react'
+import { useRestaurantFilterStore2, type QueryParamsType } from '@/store/restaurant-filter-store'
 
 
-export type QueryParamsType = {
-  city: string,
-  limit: number,
-  offset: number,
-  rating__gte?: number | number[],
-  rating__lte?: number | number[],
-  cuisine?: string,
-  rating_count_int__gte: number,
-  avg_cost__lte: number | number[],
-  avg_cost__gte: number | number[],
-}
 
 const buildSearchQuery = (validatedObj: Record<string, unknown> | undefined): string =>{
   if(typeof validatedObj === "undefined") return "";
@@ -58,51 +49,61 @@ export const Route = createFileRoute('/restaurants/filters/')({
 function RouteComponent() {
   
   const currentUrlObj = Route.useSearch();
-
+  
   if(!Object.keys(currentUrlObj).includes("limit")) currentUrlObj.limit = "10";
   if(!Object.keys(currentUrlObj).includes("offset")) currentUrlObj.offset = "0";
 
   console.log("Current url by use search: ", currentUrlObj);
-
+  
   const validationResult = SearchQuerySchema.safeParse(currentUrlObj);
-
+  
   console.log("validation results: ", validationResult);
   
   const paramStringValidation = buildSearchQuery(validationResult.data);
-  
+  const [queryData, setQueryData] = useState<QueryParamsType>();
+  // const { setFilter } = useRestaurantFilterStore2(state => state);
+
+  useEffect( () => {
+    if(validationResult.data){
+      setQueryData(validationResult.data as QueryParamsType);
+    }
+
+  }, [])
+
 
   // console.log("Cuisines: ", cuisines);
 
   // const navigate = useNavigate({from: Route.fullPath});
 
-  const {receivedData, isLoading} = useRestaurantsQuery(decodeURIComponent(paramStringValidation));
+  // const {receivedData, isLoading} = useRestaurantsQuery(decodeURIComponent(paramStringValidation));
   
+  console.log("Query data through useSTate: ", queryData?.avg_cost__lte);
   
   return <div>
     <ToastContainer theme='colored' />
 
     {
-      isLoading ? (
-        <div>Loading Restaurants...</div>
-      )
-      :
-      (
-        <RestaurantsList restaurantsApiData={receivedData} />
-      )
+      // isLoading ? (
+      //   <div>Loading Restaurants...</div>
+      // )
+      // :
+      // (
+      //   <RestaurantsList restaurantsApiData={receivedData} />
+      // )
 
     }
 
     {
-    //   <>
-    //   <H3>The json from Use search</H3>
-    //   <pre>{JSON.stringify(currentUrlObj, null, 4, )}</pre>
+      <>
+      <H3>The json from Use search</H3>
+      <pre>{JSON.stringify(currentUrlObj, null, 4, )}</pre>
 
-    //   <H3>Validated Zod object</H3>
-    // <pre>{JSON.stringify(validationResult, null, 4)}</pre>
+      <H3>Validated Zod object</H3>
+    <pre>{JSON.stringify(validationResult, null, 4)}</pre>
 
-    //  <H3>Validated zod object search query</H3>
-    //  <p>{decodeURIComponent(paramStringValidation)}</p> 
-    //   </>
+     <H3>Validated zod object search query</H3>
+     <p>{decodeURIComponent(paramStringValidation)}</p> 
+      </>
     }
 
     
