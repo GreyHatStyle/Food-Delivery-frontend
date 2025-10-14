@@ -2,19 +2,21 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import { getRestaurantsFromCity, type GetRestaurantFromCityApiResponse } from "./-api";
-import type { QueryParamsType } from "./page";
 
 
-
-export const useRestaurantsQuery = (decodedQueryString: string) => {
+// Adding current search query because, using [decodedQueryString from zustand] was calling this api every time filter
+// was being changed (toggled in zustand) without clicking apply button
+export const useRestaurantsQuery = (decodedQueryString: string, currentSearchQuery: string) => {
 
   const [receivedData, setReceivedData] = useState<GetRestaurantFromCityApiResponse>();
   
 
   const {data, isError, error, isSuccess, isLoading} = useQuery({
-    queryKey: ["restaurants"],
+    queryKey: ["restaurants", currentSearchQuery],
     queryFn: () => getRestaurantsFromCity(decodedQueryString),
-    refetchOnMount: true,
+    refetchOnMount: false,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: false,
     retry: 2,
   });
 

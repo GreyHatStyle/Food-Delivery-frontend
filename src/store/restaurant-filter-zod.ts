@@ -1,5 +1,4 @@
 import {z} from "zod"
-import { create } from "zustand"
 
 const allowedFields = ["city", "rating", "rating_count_int", "avg_cost"] as const;
 type AllowedFieldsType = typeof allowedFields[number];
@@ -40,23 +39,30 @@ export const SearchQuerySchema = z.record(z.string(), ValueQuerySchema)
                             .refine( (obj) => {
 
                                 return Object.entries(obj).every( ([key, value]) => {
-
                                     if( key === "cuisine"){
-                                        if(typeof value === "number" || typeof value ==="undefined" || typeof value === "object") return false;
-
-                                        if(!value.trim()) return false;
-
-                                        const cuisineValues = value.split(',');
-                                        // console.log("Cuisine value after split: ", cuisineValues);
-
-                                        return cuisineValues.every( cuisine => {
-                                            const cuisineTrim = cuisine.trim();
-                                            return cuisineTrim === '' || allowedCuisines.includes(cuisineTrim);
-                                        })
+                                        if(typeof value === "number" || typeof value ==="undefined") return false;
+                                        
+                                        // Handle both string and array formats
+                                        if(Array.isArray(value)) {
+                                            return value.every(cuisine => 
+                                                typeof cuisine === "string" && allowedCuisines.includes(cuisine.trim())
+                                            );
+                                        }
+                                        
+                                        if(typeof value === "string") {
+                                            if(!value.trim()) return true; // Allow empty string
+                                            
+                                            const cuisineValues = value.split(',');
+                                            return cuisineValues.every( cuisine => {
+                                                const cuisineTrim = cuisine.trim();
+                                                return cuisineTrim === '' || allowedCuisines.includes(cuisineTrim);
+                                            });
+                                        }
+                                        
+                                        return false;
                                     }
-
                                     return true;
-                                },)
+                                })
                             }, {
                                 error: "Invalid values for filters",
                             })

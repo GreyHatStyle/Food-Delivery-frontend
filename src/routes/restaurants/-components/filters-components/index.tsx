@@ -12,6 +12,8 @@ import RatingCountFilter from "./rating-count"
 import CuisineFilter from "./cuisine"
 import { FilterButton } from "./filter-button"
 import { MobileAccordionFilterSet } from "./mobile-accordion-filter-set"
+import { useRestaurantFilterStore2 } from "@/store/restaurant-filter-store"
+import { useNavigate } from "@tanstack/react-router"
 
 
 
@@ -19,7 +21,13 @@ export type FilterSection = "rating" | "averageCost" | "ratingCount" | "cuisine"
 
 
 function RestaurantFilters() {
-    const [filterSection, setFilterSection] = useState<FilterSection>("rating")
+    const [filterSection, setFilterSection] = useState<FilterSection>("rating");
+
+    const {getFilterState, clearFilterState} = useRestaurantFilterStore2(state => state);
+    console.log("Zusntad state from apply button: ", getFilterState());
+
+    const navigate = useNavigate({from: "/restaurants/filters"});
+    console.log("This console is from Selecting filters!!!!: ", getFilterState());
 
   return (
      <Dialog>
@@ -91,8 +99,20 @@ function RestaurantFilters() {
             <div id="apply-clear-filters"
             className="inline-flex gap-4 justify-end"
             >
-                <Button variant={"outline"} className="border-web-theme-green">Clear Filters</Button>
-                <Button>Apply</Button>
+                <Button variant={"outline"} className="border-web-theme-green"
+                onClick={() => {
+                  clearFilterState();
+                  navigate({
+                    search: getFilterState(),
+                  })
+                }}
+                >Clear Filters</Button>
+                
+                <Button
+                onClick={()=> navigate({
+                  search: () => getFilterState(),
+                })}
+                >Apply</Button>
             </div>
         </DialogContent>
       </form>

@@ -31,15 +31,21 @@ export type RestaurantFilterQueryParamStoreType = {
   toggleCuisine: <K extends keyof Pick<QueryParamsType, "cuisine">>(
     key: K,
     value: string,
-  ) => void
+  ) => void;
+
+  storeUsingObject: (validatedObj: Record<string, unknown> | undefined) => void;
+
+  getFilterState: () => Partial<QueryParamsType>;
+
+  clearFilterState: () => void
 
 } & QueryParamsType;
 
 export const useRestaurantFilterStore2 = create<RestaurantFilterQueryParamStoreType>()(
-    ((set) => ({
+    ((set, get) => ({
         city__iexact: "",
-        limit: 0,
-        offset: 10,
+        limit: 10,
+        offset: 0,
 
         setFilter: (key, value) => {
           set( { 
@@ -99,7 +105,59 @@ export const useRestaurantFilterStore2 = create<RestaurantFilterQueryParamStoreT
               [key]: [...currentValArr, value],
             }
           })
-        }
+        },
+
+        storeUsingObject: (validatedObj: Record<string, unknown> | undefined): void =>{
+          if(typeof validatedObj === "undefined") return;
+
+          Object.entries(validatedObj).forEach( ([key, value]) => {
+            if(value === undefined || value === null) return "";
+            
+            if(key === "cuisine" && typeof value==="string"){
+              const cuisineArray = value.split(',')
+              .map( c=> c.trim())
+              .filter( c => c!== "");
+
+              set({
+                [key]: cuisineArray,
+              });
+
+              return;
+            };
+
+            set({
+              [key]: value,
+            })
+            
+          });
+        },
+
+        getFilterState: () => {
+          const state = get();
+          return {
+            city__iexact: state.city__iexact,
+            limit: state.limit,
+            offset: state.offset,
+            rating__gte: state.rating__gte,
+            rating_count_int__gte: state.rating_count_int__gte,
+            avg_cost__lte: state.avg_cost__lte,
+            avg_cost__gte: state.avg_cost__gte,
+            cuisine: state.cuisine
+          };
+        },
+
+        clearFilterState: () => {
+          set({
+             city__iexact: "",
+            limit: 10,
+            offset: 0,
+            rating__gte: undefined,
+            rating_count_int__gte: undefined,
+            avg_cost__lte: undefined,
+            avg_cost__gte: undefined,
+            cuisine: undefined,
+          });
         
-    }))
+      },
+  }))
 )

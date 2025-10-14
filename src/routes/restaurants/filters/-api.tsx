@@ -1,6 +1,5 @@
 import axios from "axios";
-import { env } from "@/env"
-import type { QueryParamsType } from "./page";
+import { env } from "@/env";
 
 export type RestaurantDataType = {
   id: string,

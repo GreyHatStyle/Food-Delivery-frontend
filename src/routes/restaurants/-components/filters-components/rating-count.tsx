@@ -1,4 +1,3 @@
-import { Checkbox } from "@/components/ui/checkbox"
 import type { FilterSection } from "."
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
