@@ -27,7 +27,7 @@ function RestaurantFilters() {
     console.log("Zusntad state from apply button: ", getFilterState());
 
     const navigate = useNavigate({from: "/restaurants/filters"});
-    console.log("This console is from Selecting filters!!!!: ", getFilterState());
+    // console.log("This console is from Selecting filters!!!!: ", getFilterState());
 
   return (
      <Dialog>

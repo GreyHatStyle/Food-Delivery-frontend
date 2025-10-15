@@ -1,0 +1,126 @@
+{
+    "status": "success",
+    "count": 1673,
+    "next": "http://127.0.0.1:8000/restaurants/api/v1/restaurants/?city=Bikaner&limit=10&offset=20&ordering=-rating&ordering=-rating_count_int",
+    "previous": "http://127.0.0.1:8000/restaurants/api/v1/restaurants/?city=Bikaner&limit=10&ordering=-rating&ordering=-rating_count_int",
+    "results": [
+        {
+            "id": "b5652082-f471-4bd2-9c64-145e898d8c7c",
+            "r_name": "Dilli 6 on Wheels",
+            "rating": "3.70",
+            "rating_count_str": "1K+ ratings",
+            "cuisine": [
+                "North Indian",
+                "Snacks"
+            ],
+            "menu_image": "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/bca7bb9c-2ad4-4994-8f5c-ca7df875f447/view?project=68dad5db002a710b59a4",
+            "r_image_url": null
+        },
+        {
+            "id": "cfa1999b-8ca4-4ce2-9d83-a3ef99ab6a11",
+            "r_name": "Aggarwal Sweets & Restaurant",
+            "rating": "3.20",
+            "rating_count_str": "1K+ ratings",
+            "cuisine": [
+                "Sweets",
+                "North Indian"
+            ],
+            "menu_image": "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/b9df5720-d251-49f9-aa07-acce036937af/view?project=68dad5db002a710b59a4",
+            "r_image_url": null
+        },
+        {
+            "id": "0b2d1370-585b-4213-b436-f982535bb72d",
+            "r_name": "Bikanervala",
+            "rating": "4.20",
+            "rating_count_str": "1K+ ratings",
+            "cuisine": [
+                "North Indian",
+                "Chinese"
+            ],
+            "menu_image": "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/181ec5e8-7b4b-4e03-bde8-175fbc7e83fe/view?project=68dad5db002a710b59a4",
+            "r_image_url": null
+        },
+        {
+            "id": "35a77857-54c4-49c1-8ccb-e0f8cc9aedca",
+            "r_name": "The Burger Club",
+            "rating": "4.10",
+            "rating_count_str": "1K+ ratings",
+            "cuisine": [
+                "American",
+                "Beverages"
+            ],
+            "menu_image": "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/62a12efb-7298-42d3-8f98-6d2e744fcd5e/view?project=68dad5db002a710b59a4",
+            "r_image_url": null
+        },
+        {
+            "id": "b828fa18-13dd-421a-9601-064e1a986c48",
+            "r_name": "Tamilnadu Dosa Corner",
+            "rating": "4.00",
+            "rating_count_str": "1K+ ratings",
+            "cuisine": [
+                "South Indian"
+            ],
+            "menu_image": "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/d5a868a7-586e-48f1-9616-e377f220121e/view?project=68dad5db002a710b59a4",
+            "r_image_url": null
+        },
+        {
+            "id": "14f8f5c6-1456-4901-81b6-2b180301a238",
+            "r_name": "Cake Maker",
+            "rating": "4.40",
+            "rating_count_str": "1K+ ratings",
+            "cuisine": [
+                "Bakery",
+                "Desserts"
+            ],
+            "menu_image": "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/1a20c528-3c49-4ed4-af15-3a0cef5e2fbe/view?project=68dad5db002a710b59a4",
+            "r_image_url": null
+        },
+        {
+            "id": "88669416-7b39-4d36-9a17-48a5e51fd8d9",
+            "r_name": "Wendy's",
+            "rating": "4.10",
+            "rating_count_str": "1K+ ratings",
+            "cuisine": [
+                "American",
+                "Fast Food"
+            ],
+            "menu_image": "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/1d7eed09-009c-4947-992d-5daf25d544e4/view?project=68dad5db002a710b59a4",
+            "r_image_url": null
+        },
+        {
+            "id": "3c0a7b47-7730-4d05-92aa-2ff6f40057ab",
+            "r_name": "Burger King",
+            "rating": "4.20",
+            "rating_count_str": "1K+ ratings",
+            "cuisine": [
+                "American"
+            ],
+            "menu_image": "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/4fae286a-ab31-42be-ba2c-1acb6c02df6c/view?project=68dad5db002a710b59a4",
+            "r_image_url": null
+        },
+        {
+            "id": "fc09807d-9f08-408e-9774-fac652c607f6",
+            "r_name": "Rominus Pizza And Burger",
+            "rating": "4.00",
+            "rating_count_str": "1K+ ratings",
+            "cuisine": [
+                "Italian-American",
+                "Pizzas"
+            ],
+            "menu_image": "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/b6252c8e-953c-46b6-b7f1-6aca2f2ffa4f/view?project=68dad5db002a710b59a4",
+            "r_image_url": null
+        },
+        {
+            "id": "fd6c4d5e-d7e5-43bf-b352-757c1838bfaf",
+            "r_name": "The Millionaire Pizza & Pasta",
+            "rating": "4.00",
+            "rating_count_str": "1K+ ratings",
+            "cuisine": [
+                "Pizzas",
+                "Italian"
+            ],
+            "menu_image": "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/aab26446-1e47-4b3e-9e29-2ec816d8b9de/view?project=68dad5db002a710b59a4",
+            "r_image_url": null
+        }
+    ]
+}

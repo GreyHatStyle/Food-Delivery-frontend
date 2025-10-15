@@ -27,7 +27,7 @@ function RouteComponent() {
   const validationResult = SearchQuerySchema.safeParse(currentUrlObj);
   
   console.log("validation results: ", validationResult);
-  console.log("URL object results: ", currentUrlObj);
+  // console.log("URL object results: ", currentUrlObj);
   
   // const paramStringValidation = buildSearchQuery(validationResult.data);
   const restState = useRestaurantFilterStore2(state => state);
@@ -57,7 +57,7 @@ function RouteComponent() {
   const {receivedData, isLoading} = useRestaurantsQuery(currentSearchUrl, currentSearchUrl);
 
 
-  console.log("Limit from zustand: ", typeof restState.limit)
+  // console.log("Limit from zustand: ", typeof restState.limit)
   
   return <div>
     <ToastContainer theme='colored' />
