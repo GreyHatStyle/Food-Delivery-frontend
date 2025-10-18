@@ -7,7 +7,9 @@ export const Route = createFileRoute('/menu/')({
 })
 
 function RouteComponent() {
-  return <div>
+  return <div 
+  className='variable-margin'
+  >
 
     <AboutRestaurantSection/>
 

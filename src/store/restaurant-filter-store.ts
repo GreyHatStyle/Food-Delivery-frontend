@@ -148,7 +148,6 @@ export const useRestaurantFilterStore2 = create<RestaurantFilterQueryParamStoreT
 
         clearFilterState: () => {
           set({
-             city__iexact: "",
             limit: 10,
             offset: 0,
             rating__gte: undefined,
