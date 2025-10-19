@@ -2,8 +2,19 @@ import { H3 } from "@/components/ui/typography"
 import { TbArrowWaveLeftDown, TbArrowWaveRightDown } from "react-icons/tb";
 import Recommended from "./recommended";
 import MenuItemsList from "./menu-items-list";
+import type { MenuItemsType } from "../../-api/menu-api";
 
-function CategoryMenu() {
+interface CategoryMenuProps{
+  recomFoodItems: MenuItemsType[],
+  categories: string[],
+  displayFoodItems: MenuItemsType[],
+}
+
+function CategoryMenu({
+  recomFoodItems,
+  categories,
+  displayFoodItems,
+}: CategoryMenuProps) {
   return (
     <div className=" flex flex-col items-center">
 
@@ -18,10 +29,13 @@ function CategoryMenu() {
       
       </div>      
 
-      <Recommended />
+      <Recommended 
+      recommendedFoods={recomFoodItems}
+      />
 
       <MenuItemsList 
-      
+      categories={categories}
+      menuList={displayFoodItems}
       />
 
     </div>

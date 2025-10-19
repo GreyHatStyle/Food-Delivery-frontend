@@ -1,15 +1,24 @@
 import { Button } from '@/components/ui/button'
 import { H3 } from '@/components/ui/typography'
 import MenuCard from './menu-card';
+import type { MenuItemsType } from '../../-api/menu-api';
 
-function MenuItemsList() {
+interface MenuItemsListProps{
+    categories: string[],
+    menuList: MenuItemsType[],
+}
 
-    const categories = [
-                        "Fried Rice",
-                        "Chinese",
-                        "Burger",
-                        "Roll"
-                    ];
+function MenuItemsList({
+    categories,
+    menuList,
+}: MenuItemsListProps) {
+
+    // const categories = [
+    //                     "Fried Rice",
+    //                     "Chinese",
+    //                     "Burger",
+    //                     "Roll"
+    //                 ];
 
     
 
@@ -34,12 +43,22 @@ function MenuItemsList() {
             }
         </div>
 
-        {/* TODO: Fix this menu list as soon as possible */}
         <div id='menu-list'
-        className='flex flex-col'
+        className='flex flex-col gap-3'
         >
+            {
+                menuList.map( (menuItem, index) => (
+                    <MenuCard 
+                    key={index}
+                    foodName={menuItem.name}
+                    cost={menuItem.price}
+                    foodType={menuItem.food_type}
+                    imgUrl={menuItem.image_url}
+                    />
 
-            <MenuCard />
+                ))
+            }
+
 
         </div>
         

@@ -2,7 +2,7 @@ import { env } from "@/env";
 import axios from "axios";
 
 
-type MenuItemsType = {
+export type MenuItemsType = {
     name: string,
     price: number,
     food_type: "V" | "NV",
@@ -26,6 +26,7 @@ export type OneRestDetails = {
     id: string,
     r_name: string,
     avg_cost: number,
+    rating: number,
     rating_count_str: string,
     cuisine: string[],
     menu_image: string, // don't have to do anything with this for now

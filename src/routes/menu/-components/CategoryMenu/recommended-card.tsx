@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import NonVegIcon from "@/components/ui/non-veg-icon"
 import { H4 } from "@/components/ui/typography"
 import VegIcon from "@/components/ui/veg-icon"
+import type { ComponentProps } from "react"
 
 
 interface RecommendedCardProps{
@@ -16,9 +17,12 @@ function RecommendedCard({
     imgUrl,
     price,
     foodType,
-}: RecommendedCardProps) {
+    key,
+}: RecommendedCardProps & ComponentProps<"div">) {
   return (
-    <div className="relative overflow-hidden rounded-md">
+    <div 
+    key={key}
+    className="relative overflow-hidden rounded-md">
 
         <img 
         className="object-cover scale-150"

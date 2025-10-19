@@ -1,17 +1,30 @@
 import NonVegIcon from "@/components/ui/non-veg-icon"
 import VegIcon from "@/components/ui/veg-icon"
+import { type ComponentProps } from "react"
 
+function MenuCard({
+    foodName,
+    cost,
+    foodType,
+    imgUrl,
+    key,
+}: {
+    foodName: string,
+    cost: number,
+    foodType: "V" | "NV",
+    imgUrl: string,
+}& ComponentProps<"div">){
 
-function MenuCard() {
-
-    const foodName = "Paneer Burger";
-    const cost = 100;
-    const foodType = "V";
-    const imgUrl = "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/cca80fbc-d915-4bae-9daf-b03729b87351/view?project=68dad5db002a710b59a4";
+    // const foodName = "Paneer Burger";
+    // const cost = 100;
+    // const foodType = "V";
+    // const imgUrl = "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/cca80fbc-d915-4bae-9daf-b03729b87351/view?project=68dad5db002a710b59a4";
 
 
   return (
-    <div className='inline-flex sm:mx-[3rem] py-7 px-7 sm:px-11 bg-white border-2 rounded-xl justify-between '>
+    <div 
+    key={key}
+    className='inline-flex sm:mx-[3rem] py-7 px-7 sm:px-11 bg-white border-2 rounded-xl justify-between '>
         <div className='flex flex-col gap-2 justify-center max-w-[50%]'>
 
             {

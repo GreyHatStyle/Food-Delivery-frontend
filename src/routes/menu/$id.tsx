@@ -11,19 +11,35 @@ function RouteComponent() {
   // Thinking of doing API call here to divide data in following components
   const { id } = Route.useParams();
   
-  const {restaurantData, categoryData} = useSelectRestaurantQuery({restId: id});
+  const {restaurantData, categoryMenuData, availableCategories} = useSelectRestaurantQuery({restId: id});
 
 
 
   return <div 
   className='variable-margin'
   >
-    <pre>{JSON.stringify(restaurantData, null, 4)}</pre>
-    <pre>{JSON.stringify(categoryData, null, 4)}</pre>
+    {
+      // <>
+      // <pre>{JSON.stringify(restaurantData, null, 4)}</pre>
+      // <pre>{JSON.stringify(categoryData, null, 4)}</pre>
+      // <p>{availableCategories?.join(", ")}</p>
+      
+      // </>
+    }
 
-    <AboutRestaurantSection/>
+    <AboutRestaurantSection
+    title={restaurantData?.r_name || "Restaurant Name"}
+    rating={restaurantData?.rating || 4.1}
+    rating_count={restaurantData?.rating_count_str || "100+ ratings"}
+    cuisines={restaurantData?.cuisine || ["Chinese", "North Indian"]}
+    address={restaurantData?.address || "Address of shop"}
+    />
 
-    <CategoryMenu />
+    <CategoryMenu 
+    categories={availableCategories || ["category1", "category2"]}
+    recomFoodItems={restaurantData?.menu_data[0].categories.menu_items || []}
+    displayFoodItems={categoryMenuData?.categories.menu_items || []}
+    />
 
   </div>
 }

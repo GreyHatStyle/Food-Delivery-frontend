@@ -2,14 +2,27 @@ import { H2 } from "@/components/ui/typography"
 import { MdStars } from "react-icons/md";
 import DealBox from "./discount-cards";
 
+interface AboutRestaurantSectionProps {
+  title: string,
+  rating: number,
+  rating_count: string,
+  cuisines: string[],
+  address: string,
+}
 
-function AboutRestaurantSection() {
+function AboutRestaurantSection({
+  title,
+  rating,
+  rating_count,
+  cuisines,
+  address
+}: AboutRestaurantSectionProps) {
 
-  const title = "Pizza Hut";
-  const rating = 4.1;
-  const rating_count = "7.6K+ ratings";
-  const cuisines = ["North India", "South Indian"];
-  const address = "Pa Ji Family Restro, 85/355 Laxmi purwa duputy padav, Saina Purwa, Cooperganj, Kanpur, Uttar Pradesh 208003"
+  // const title = "Pizza Hut";
+  // const rating = 4.1;
+  // const rating_count = "7.6K+ ratings";
+  // const cuisines = ["North India", "South Indian"];
+  // const address = "Pa Ji Family Restro, 85/355 Laxmi purwa duputy padav, Saina Purwa, Cooperganj, Kanpur, Uttar Pradesh 208003"
 
   return (
     <div className="m-3 sm:m-11 flex flex-col gap-5 ">

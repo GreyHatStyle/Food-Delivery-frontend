@@ -16,6 +16,7 @@ export function useSelectRestaurantQuery({
     const [restMenuData, setRestMenuData] = useState<OneRestDetails>();
     const [catMenudata, setCateMenuData] = useState<MenuDataType>();
     const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const [availableCategories, setAvailableCategories] = useState<string[]>();
 
     const restaurantQuery = useQuery({
         queryKey: ["menu", restId],
@@ -30,6 +31,7 @@ export function useSelectRestaurantQuery({
     useEffect( () => {
         if(restaurantQuery.isSuccess){
             setRestMenuData(restaurantQuery.data.results[0]);
+            setAvailableCategories(restaurantQuery.data.results[0].category[0].names);
 
             if (category){
                 setSelectedCategory(category);
@@ -59,7 +61,8 @@ export function useSelectRestaurantQuery({
 
     return {
         restaurantData: restMenuData,
-        categoryData: catMenudata,
+        categoryMenuData: catMenudata,
+        availableCategories,
         isRestaurantSuccess: restaurantQuery.isSuccess,
         isCategorySuccess: categoryQuery.isSuccess,
         isRestaurantError: restaurantQuery.isError,
