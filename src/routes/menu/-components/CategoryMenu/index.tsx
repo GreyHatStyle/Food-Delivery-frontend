@@ -1,10 +1,11 @@
 import { H3 } from "@/components/ui/typography"
 import { TbArrowWaveLeftDown, TbArrowWaveRightDown } from "react-icons/tb";
 import Recommended from "./recommended";
+import MenuItemsList from "./menu-items-list";
 
 function CategoryMenu() {
   return (
-    <div className="variable-margin flex flex-col items-center">
+    <div className=" flex flex-col items-center">
 
       <div className="inline-flex items-center gap-2">
         <TbArrowWaveLeftDown className="size-[30px]"/>  
@@ -18,6 +19,10 @@ function CategoryMenu() {
       </div>      
 
       <Recommended />
+
+      <MenuItemsList 
+      
+      />
 
     </div>
   )

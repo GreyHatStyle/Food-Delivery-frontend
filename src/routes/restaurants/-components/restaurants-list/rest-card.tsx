@@ -1,9 +1,11 @@
 import { H4 } from "@/components/ui/typography"
+import { useNavigate } from "@tanstack/react-router";
 import type { ComponentProps } from "react";
 import { MdStars } from "react-icons/md";
 
 
 interface RestaurantCardProps{
+    restId: string,
     image: string,
     restaurantName: string,
     rating: number,
@@ -12,6 +14,7 @@ interface RestaurantCardProps{
 };
 
 function RestaurantCard({
+    restId,
     image,
     restaurantName,
     rating,
@@ -20,8 +23,17 @@ function RestaurantCard({
     ...props
 }: RestaurantCardProps & ComponentProps<"div">) {
 
+    const navigate = useNavigate();
+
   return (
     <div 
+    onClick={() => navigate({
+        to: "/menu/$id",
+        params: {
+            id: restId,
+        },
+    })}
+
     className="flex flex-col min-w-[200px] max-w-[320px] p-3 rounded-xl hover:scale-105
     bg-background cursor-pointer shadow-card transition-all"
     {...props}

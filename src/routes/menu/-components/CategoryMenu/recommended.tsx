@@ -11,7 +11,7 @@ function Recommended() {
     const imgUrl = "https://fra.cloud.appwrite.io/v1/storage/buckets/68db9320002150bd6130/files/1158b636-01f7-4fc0-936b-d9aedaa10455/view?project=68dad5db002a710b59a4";
 
   return (
-    <div className="self-start bg-green-50">
+    <div className="variable-margin self-start ">
         
         <H3
         className="my-11 font-bold"

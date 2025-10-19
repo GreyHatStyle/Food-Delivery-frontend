@@ -10,8 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RestaurantsLayoutRouteImport } from './routes/restaurants/layout'
-import { Route as MenuPageRouteImport } from './routes/menu/page'
 import { Route as homePageRouteImport } from './routes/(home)/page'
+import { Route as MenuIdRouteImport } from './routes/menu/$id'
 import { Route as RestaurantsFiltersPageRouteImport } from './routes/restaurants/filters/page'
 import { Route as RestaurantsmainPagePageRouteImport } from './routes/restaurants/(main-page)/page'
 
@@ -20,14 +20,14 @@ const RestaurantsLayoutRoute = RestaurantsLayoutRouteImport.update({
   path: '/restaurants',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MenuPageRoute = MenuPageRouteImport.update({
-  id: '/menu/',
-  path: '/menu/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const homePageRoute = homePageRouteImport.update({
   id: '/(home)/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MenuIdRoute = MenuIdRouteImport.update({
+  id: '/menu/$id',
+  path: '/menu/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RestaurantsFiltersPageRoute = RestaurantsFiltersPageRouteImport.update({
@@ -43,22 +43,22 @@ const RestaurantsmainPagePageRoute = RestaurantsmainPagePageRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/restaurants': typeof RestaurantsLayoutRouteWithChildren
+  '/menu/$id': typeof MenuIdRoute
   '/': typeof homePageRoute
-  '/menu': typeof MenuPageRoute
   '/restaurants/': typeof RestaurantsmainPagePageRoute
   '/restaurants/filters': typeof RestaurantsFiltersPageRoute
 }
 export interface FileRoutesByTo {
+  '/menu/$id': typeof MenuIdRoute
   '/': typeof homePageRoute
-  '/menu': typeof MenuPageRoute
   '/restaurants': typeof RestaurantsmainPagePageRoute
   '/restaurants/filters': typeof RestaurantsFiltersPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/restaurants': typeof RestaurantsLayoutRouteWithChildren
+  '/menu/$id': typeof MenuIdRoute
   '/(home)/': typeof homePageRoute
-  '/menu/': typeof MenuPageRoute
   '/restaurants/(main-page)/': typeof RestaurantsmainPagePageRoute
   '/restaurants/filters/': typeof RestaurantsFiltersPageRoute
 }
@@ -66,25 +66,25 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/restaurants'
+    | '/menu/$id'
     | '/'
-    | '/menu'
     | '/restaurants/'
     | '/restaurants/filters'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/menu' | '/restaurants' | '/restaurants/filters'
+  to: '/menu/$id' | '/' | '/restaurants' | '/restaurants/filters'
   id:
     | '__root__'
     | '/restaurants'
+    | '/menu/$id'
     | '/(home)/'
-    | '/menu/'
     | '/restaurants/(main-page)/'
     | '/restaurants/filters/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   RestaurantsLayoutRoute: typeof RestaurantsLayoutRouteWithChildren
+  MenuIdRoute: typeof MenuIdRoute
   homePageRoute: typeof homePageRoute
-  MenuPageRoute: typeof MenuPageRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -96,18 +96,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RestaurantsLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/menu/': {
-      id: '/menu/'
-      path: '/menu'
-      fullPath: '/menu'
-      preLoaderRoute: typeof MenuPageRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/(home)/': {
       id: '/(home)/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof homePageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/menu/$id': {
+      id: '/menu/$id'
+      path: '/menu/$id'
+      fullPath: '/menu/$id'
+      preLoaderRoute: typeof MenuIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/restaurants/filters/': {
@@ -142,8 +142,8 @@ const RestaurantsLayoutRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   RestaurantsLayoutRoute: RestaurantsLayoutRouteWithChildren,
+  MenuIdRoute: MenuIdRoute,
   homePageRoute: homePageRoute,
-  MenuPageRoute: MenuPageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

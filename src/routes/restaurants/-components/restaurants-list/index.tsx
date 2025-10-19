@@ -51,6 +51,7 @@ function RestaurantsList({
         myData.results.map((restaurant, index) => (
           <RestaurantCard 
           key={index}
+          restId={restaurant.id}
           image={ restaurant.r_image_url || restaurant.menu_image}
           restaurantName={restaurant.r_name}
           rating={+restaurant.rating}
