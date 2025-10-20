@@ -22,7 +22,7 @@ function RecommendedCard({
   return (
     <div 
     key={key}
-    className="relative overflow-hidden rounded-md">
+    className="relative overflow-hidden rounded-md max-w-[260px] sm:max-w-[350px]">
 
         <img 
         className="object-cover scale-150"

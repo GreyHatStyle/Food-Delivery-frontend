@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import NonVegIcon from "@/components/ui/non-veg-icon"
 import VegIcon from "@/components/ui/veg-icon"
 import { type ComponentProps } from "react"
@@ -24,7 +25,7 @@ function MenuCard({
   return (
     <div 
     key={key}
-    className='inline-flex sm:mx-[3rem] py-7 px-7 sm:px-11 bg-white border-2 rounded-xl justify-between '>
+    className='inline-flex md:mx-[3rem] py-7 px-7 sm:px-11 bg-white border-2 rounded-xl justify-between '>
         <div className='flex flex-col gap-2 justify-center max-w-[50%]'>
 
             {
@@ -35,7 +36,7 @@ function MenuCard({
             }
 
             <p
-            className='text-teal-800 font-bold mt-7 text-2xl'
+            className='text-sm text-teal-800 font-bold mt-7 md:text-2xl'
             >{foodName}</p>
 
             <p
@@ -43,16 +44,21 @@ function MenuCard({
             >&#8377; {cost}</p>
             
             <p
-            className='text-sm'
+            className='text-[12px] md:text-sm'
             >Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic iusto delectus nobis nulla pariatur.</p>
         
         </div>
 
-        <div className='overflow-hidden rounded-md max-w-[140px]'>
+        <div className='relative overflow-hidden rounded-md max-w-[140px]'>
             <img 
             className='object-cover scale-120'
             src={imgUrl} alt="" />
-
+            
+            <Button
+            variant={"addMenuCart"}
+            size={"lg"}
+            className="absolute bottom-2 left-5 sm:left-8 border-2"
+            >ADD</Button>
         </div>
 
     </div>

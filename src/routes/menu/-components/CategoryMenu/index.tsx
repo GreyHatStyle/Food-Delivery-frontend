@@ -6,14 +6,14 @@ import type { MenuItemsType } from "../../-api/menu-api";
 
 interface CategoryMenuProps{
   recomFoodItems: MenuItemsType[],
-  categories: string[],
-  displayFoodItems: MenuItemsType[],
+  restId: string,
+  categories: string[] | undefined,
 }
 
 function CategoryMenu({
   recomFoodItems,
   categories,
-  displayFoodItems,
+  restId,
 }: CategoryMenuProps) {
   return (
     <div className=" flex flex-col items-center">
@@ -34,8 +34,8 @@ function CategoryMenu({
       />
 
       <MenuItemsList 
+      restId={restId}
       categories={categories}
-      menuList={displayFoodItems}
       />
 
     </div>

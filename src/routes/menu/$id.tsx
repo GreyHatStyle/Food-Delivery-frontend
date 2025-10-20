@@ -11,7 +11,7 @@ function RouteComponent() {
   // Thinking of doing API call here to divide data in following components
   const { id } = Route.useParams();
   
-  const {restaurantData, categoryMenuData, availableCategories} = useSelectRestaurantQuery({restId: id});
+  const {restaurantData, availableCategories} = useSelectRestaurantQuery({restId: id});
 
 
 
@@ -36,9 +36,9 @@ function RouteComponent() {
     />
 
     <CategoryMenu 
-    categories={availableCategories || ["category1", "category2"]}
+    restId={id}
+    categories={availableCategories}
     recomFoodItems={restaurantData?.menu_data[0].categories.menu_items || []}
-    displayFoodItems={categoryMenuData?.categories.menu_items || []}
     />
 
   </div>

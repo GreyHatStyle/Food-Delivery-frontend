@@ -1,25 +1,23 @@
 import { Button } from '@/components/ui/button'
 import { H3 } from '@/components/ui/typography'
 import MenuCard from './menu-card';
-import type { MenuItemsType } from '../../-api/menu-api';
+import { useGetMenuByCategoryQuery } from '../../-query/category-menu-query';
 
 interface MenuItemsListProps{
-    categories: string[],
-    menuList: MenuItemsType[],
+    categories: string[] | undefined,
+    restId: string,
 }
 
 function MenuItemsList({
     categories,
-    menuList,
+    restId,
 }: MenuItemsListProps) {
-
-    // const categories = [
-    //                     "Fried Rice",
-    //                     "Chinese",
-    //                     "Burger",
-    //                     "Roll"
-    //                 ];
-
+   
+    // Making category undefined since DOM uses DFS in backend, because of which this hook will 
+    // run first instead of the parent (which was causing problem because it needed category 
+    // from parent component first, hence used undefined + enabled in useQuery)
+    const catReceived = categories ? categories[0] : undefined;
+    const {categoryMenuData, changeCategory, currentCategory} = useGetMenuByCategoryQuery(restId, catReceived);
     
 
   return (
@@ -33,9 +31,16 @@ function MenuItemsList({
         className='inline-flex gap-3 py-4 flex-wrap'
         >
             {
-                categories.map((catName, index) => (
+                // skipping first category since its already been shown in Recommended carousel
+                categories?.map((catName, index) => (
                     <Button
+                    style={{
+                        backgroundColor: currentCategory === catName ? "black" : ""
+                    }}
                     key={index}
+                    onClick={() => {
+                        changeCategory(catName);
+                    }}
                     >
                         {catName}
                     </Button>
@@ -47,7 +52,7 @@ function MenuItemsList({
         className='flex flex-col gap-3'
         >
             {
-                menuList.map( (menuItem, index) => (
+                categoryMenuData?.map( (menuItem, index) => (
                     <MenuCard 
                     key={index}
                     foodName={menuItem.name}

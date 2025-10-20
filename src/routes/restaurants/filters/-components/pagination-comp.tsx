@@ -18,7 +18,7 @@ function nextPageUrl(currentUrlObj: QueryParamsType, limit: number, offset: numb
     const newOffset = offset + limit;
     urlCopy.offset = newOffset;
     const newUrl = decodeURIComponent(buildSearchQuery(urlCopy));
-    console.log("New url", newUrl);
+    // console.log("New url", newUrl);
     return newUrl;
 }
 
@@ -27,7 +27,7 @@ function prevPageUrl(currentUrlObj: QueryParamsType, limit: number, offset: numb
     const newOffset = offset - limit;
     urlCopy.offset = newOffset;
     const newUrl = decodeURIComponent(buildSearchQuery(urlCopy));
-    console.log("New url", newUrl);
+    // console.log("New url", newUrl);
     return newUrl;
 }
 
@@ -64,8 +64,8 @@ function PaginationComp({
     const pages_count = Math.ceil( count / Math.abs(limit));
     const currentPageNo = Math.floor(offset / limit) + 1;
 
-    console.log("Page number: ", currentPageNo);
-    console.log("Pages: ", pages_count);
+    // console.log("Page number: ", currentPageNo);
+    // console.log("Pages: ", pages_count);
 
 
     return (
