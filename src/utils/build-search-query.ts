@@ -5,7 +5,7 @@ export const buildSearchQuery = (validatedObj: Record<string, unknown> | undefin
   const params = new URLSearchParams();
 
   Object.entries(validatedObj).forEach( ([key, value]) => {
-    if(value === undefined || value === null) return "";
+    if(value === undefined || value === null || key==="count") return "";
     
     // Making this condition to filter the key values of zustand that has functions
     if (

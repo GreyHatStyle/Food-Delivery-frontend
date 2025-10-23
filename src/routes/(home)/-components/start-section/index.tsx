@@ -61,16 +61,10 @@ function StartSection() {
               <CommandInput 
               input_value={selectedCity}
               result_count_show={!isMobileDevice ? `${cities.length} cities` : ""}
-              onValueChange={ (value) => {
-                setSelectedCity(value);
 
-                if(value.length != 0){
-                  setOpenSearchBox(true);
-                }
-                else{
-                  setOpenSearchBox(false);
-                }
-              }}
+              onFocus={() => setOpenSearchBox(true)}
+              onBlur={() => setOpenSearchBox(false)} // On blur is opposite of onFocus (when user clicks somewhere else)
+              onValueChange={ (value) => setSelectedCity(value)}
 
               placeholder="Search City..." />
 

@@ -80,7 +80,7 @@ const footerLeftLists: ListSetProps[] = [
 
 function Footer() {
   return (
-    <footer className="bg-[#E7E8DE] p-[5rem] rounded-t-4xl flex flex-row gap-14 flex-wrap">
+    <footer className="bg-[#E7E8DE] p-[5rem] rounded-t-4xl flex flex-row gap-14 flex-wrap mt-11">
       
       <FooterLeft/>
 

@@ -9,6 +9,8 @@ export type QueryParamsType = {
   city__iexact: string,
   limit: number,
   offset: number,
+  search?: string,
+  count?: number, // this won't be sent to URL param (its there just to store results count)
   rating__gte?: number | number[],
   rating_count_int__gte?: number,
   avg_cost__lte?: number[],
@@ -138,6 +140,7 @@ export const useRestaurantFilterStore2 = create<RestaurantFilterQueryParamStoreT
             city__iexact: state.city__iexact,
             limit: state.limit,
             offset: state.offset,
+            search: state.search,
             rating__gte: state.rating__gte,
             rating_count_int__gte: state.rating_count_int__gte,
             avg_cost__lte: state.avg_cost__lte,

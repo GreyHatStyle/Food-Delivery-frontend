@@ -40,9 +40,10 @@ function DisplayFilteredRestaurants({
       console.log("Stored new object")
     }
     
-  }, [])
+  }, [validationResult.success])
+
   
-  const zustandStringParam = decodeURIComponent(buildSearchQuery(restState));
+  const zustandStringParam = decodeURIComponent(buildSearchQuery(restState.getFilterState()));
   const currentSearchUrl = decodeURIComponent(buildSearchQuery(currentUrlObj));
   
 
@@ -50,13 +51,12 @@ function DisplayFilteredRestaurants({
 
   // const navigate = useNavigate({from: Route.fullPath});
   
-  console.log("URL Decoded from zustand: ", decodeURIComponent(zustandStringParam));
+  console.log("URL Decoded from zustand: ", zustandStringParam);
   console.log("Zustand object: ", restState.getFilterState())
   
   // sending this current url instead of zustand url (because for some reason the above useEffect() doesn't work for first time)
   // welp its saving after next render and working so no problem :)
-  const {receivedData, isLoading} = useRestaurantsQuery(currentSearchUrl, currentSearchUrl);
-
+  const {receivedData, isLoading} = useRestaurantsQuery(zustandStringParam, currentSearchUrl, restState.getFilterState());
 
   // console.log("Limit from zustand: ", typeof restState.limit)
   

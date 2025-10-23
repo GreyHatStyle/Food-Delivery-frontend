@@ -3,7 +3,7 @@ import {z} from "zod"
 const allowedFields = ["city", "rating", "rating_count_int", "avg_cost"] as const;
 type AllowedFieldsType = typeof allowedFields[number];
 
-const allowedNonLookupFields = ["limit", "offset", "cuisine",] as const;
+const allowedNonLookupFields = ["limit", "offset", "cuisine", "search"] as const;
 type AllowedNonLookupFieldType = typeof allowedNonLookupFields[number];
 
 const allowedLookups = ["lte", "gte", "iexact"] as const;
