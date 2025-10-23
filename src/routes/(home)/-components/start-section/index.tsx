@@ -14,7 +14,7 @@ import { useIsMobile } from "@/hooks/useMobile";
 import { useCitiesQuery } from "../../-queries/cities-query";
 import { useState } from "react";
 import { useCityStore } from "@/store/city-store";
-import { Link } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 
 
 function StartSection() {
@@ -25,6 +25,8 @@ function StartSection() {
   const { setCurrentCity } = useCityStore(state => state); // To make sure re-render happens in change of variable
   const { isMobileDevice } = useIsMobile();
   const {cities} = useCitiesQuery();
+  const navigate = useNavigate();
+
 
   // function press_button(){
   //   console.log("pressed button!!: local city: ", selectedCity);
@@ -55,22 +57,32 @@ function StartSection() {
 
           <div className="relative h-[4em]">
 
-
-            <Command className="absolute top-0 left-0 mt-6 max-w-[32rem] border md:min-w-[450px] h-auto">
+            {/* Did z-5 because  button was coming over Command component for some reason*/}
+            <Command 
+            className="absolute top-0 left-0 mt-6 max-w-[32rem] border md:min-w-[450px] h-auto z-5">
 
               <CommandInput 
               input_value={selectedCity}
               result_count_show={!isMobileDevice ? `${cities.length} cities` : ""}
+              onBlur={() => {
+                // Did this specific time out to solve glitch 
+                // On clicking one of command item, the Whole list was closing even before adding it to state, so made this function
+                // slow on purpose to first let the value go to "selectedCity" state, and then close it
+                setTimeout(() => {
+                  setOpenSearchBox(false);
+                }, 200)
+              }}
 
               onFocus={() => setOpenSearchBox(true)}
-              onBlur={() => setOpenSearchBox(false)} // On blur is opposite of onFocus (when user clicks somewhere else)
+               // On blur is opposite of onFocus (when user clicks somewhere else)
               onValueChange={ (value) => setSelectedCity(value)}
 
               placeholder="Search City..." />
 
                 <CommandList
+                
                 style={{
-                  display: searchBoxOpened ? "block" : "none"
+                  display: searchBoxOpened ? "block" : "none",
                 }}
                 className=""
                 >
@@ -79,7 +91,7 @@ function StartSection() {
                       cities.map((city, index) => (
                         <CommandItem 
                           onSelect={() => {
-                            setOpenSearchBox(false);
+                            // setOpenSearchBox(false);
                             setSelectedCity(city);
                           }}
 
@@ -105,17 +117,30 @@ function StartSection() {
             className="px-8 sm:px-16 sm:py-4"
             variant={"default"}>Delivery</Button> */}
 
-            <Link to="/restaurants/filters"
-            onClick={() => setCurrentCity(selectedCity)}
-            className="px-8 sm:px-16 sm:py-1.5 bg-web-theme-green rounded-full text-white"
-            search={{
-              city__iexact: `${selectedCity}`,
+            <Button 
+            disabled={!cities.includes(selectedCity)}
+
+            onClick={() => {
+              setCurrentCity(selectedCity);
+
+              navigate({
+                to: "/restaurants/filters",
+                search: {
+                  city__iexact: `${selectedCity}`
+                }
+              })
+              
             }}
+            className="px-8 sm:px-16 sm:py-1.5 disabled:bg-black"
+            
+            // search={{
+            //   city__iexact: `${selectedCity}`,
+            // }}
             >
               
               Delivery
               
-              </Link>
+              </Button>
 
             <p className="text-web-theme-green">Or</p>
             <Button 

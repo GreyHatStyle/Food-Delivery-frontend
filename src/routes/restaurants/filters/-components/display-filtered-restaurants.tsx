@@ -51,8 +51,8 @@ function DisplayFilteredRestaurants({
 
   // const navigate = useNavigate({from: Route.fullPath});
   
-  console.log("URL Decoded from zustand: ", zustandStringParam);
-  console.log("Zustand object: ", restState.getFilterState())
+  // console.log("URL Decoded from zustand: ", zustandStringParam);
+  // console.log("Zustand object: ", restState.getFilterState())
   
   // sending this current url instead of zustand url (because for some reason the above useEffect() doesn't work for first time)
   // welp its saving after next render and working so no problem :)

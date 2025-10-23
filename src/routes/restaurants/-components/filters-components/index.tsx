@@ -24,7 +24,6 @@ function RestaurantFilters() {
     const [filterSection, setFilterSection] = useState<FilterSection>("rating");
 
     const {getFilterState, clearFilterState} = useRestaurantFilterStore2(state => state);
-    console.log("Zusntad state from apply button: ", getFilterState());
 
     const navigate = useNavigate({from: "/restaurants/filters"});
     // console.log("This console is from Selecting filters!!!!: ", getFilterState());

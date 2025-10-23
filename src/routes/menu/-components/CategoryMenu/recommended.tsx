@@ -33,7 +33,6 @@ function Recommended({
         className="my-11 font-bold self-start"
         >Recommended</H3>
 
-        {/* TODO: Fix the carousel for mobile devices */}
         <Carousel className="recommended-carousel-min-width-fix sm:max-w-dvw">
           <CarouselContent className='my-4 px-11 pr-13'>
           {
