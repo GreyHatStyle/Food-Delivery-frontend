@@ -1,12 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { Heart, ShoppingBagIcon } from "lucide-react"
+import { Heart } from "lucide-react"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import CartHoverCard from "./cart-hover-card";
+import { Login } from "./login";
 
 function Menubar() {
+
   return (
     <div className="flex flex-row gap-5">
         <Button 
@@ -18,20 +21,16 @@ function Menubar() {
         className="px-[2rem]"
         variant={"ghost"}>Help</Button>
         
-        <Button 
+        {/* <Button 
         className="px-[2rem] border-2"
-        variant={"ghost"}>Sign Up</Button>
+        variant={"ghost"}
+        onClick={()=>openLoginForm(true)}
+        >
+          Sign Up</Button> */}
         
-        <Tooltip>
-        <TooltipTrigger asChild>
-            <Button>
-            <ShoppingBagIcon />
-            </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-            <p>Cart</p>
-        </TooltipContent>
-        </Tooltip>
+        <Login />
+
+        <CartHoverCard />
 
         <Tooltip>
         <TooltipTrigger asChild>
@@ -43,6 +42,8 @@ function Menubar() {
             <p>Favorites</p>
         </TooltipContent>
         </Tooltip>
+
+
     </div>
   )
 }
