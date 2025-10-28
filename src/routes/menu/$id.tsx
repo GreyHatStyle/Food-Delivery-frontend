@@ -2,7 +2,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import AboutRestaurantSection from './-components/AboutRestaurantSection'
 import CategoryMenu from './-components/CategoryMenu'
 import { useSelectRestaurantQuery } from './-query/rest-menu-query';
-import Joyride, { type Step } from 'react-joyride';
+import Joyride, { type CallBackProps, type Step } from 'react-joyride';
+import { useJoyrideSession } from '@/store/joyride-session';
 
 
 export const Route = createFileRoute('/menu/$id')({
@@ -47,8 +48,15 @@ function RouteComponent() {
   const { id } = Route.useParams();
   
   const {restaurantData, availableCategories} = useSelectRestaurantQuery({restId: id});
+  const {menuRun, setRunState} = useJoyrideSession(state => state);
 
+  const handleSessionCallback = (data: CallBackProps) => {
+    const {status} = data;
 
+    if (status === 'finished' || status === 'skipped'){
+      setRunState("menuRun", false);
+    }
+  }
 
   return <div 
   className='variable-margin'
@@ -78,11 +86,11 @@ function RouteComponent() {
     />
 
     <Joyride 
-    run
+    run={menuRun}
     steps={steps}
     continuous
     showProgress
-    
+    callback={handleSessionCallback}
     />
 
   </div>

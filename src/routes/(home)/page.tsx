@@ -3,8 +3,9 @@ import StartSection from './-components/start-section'
 import SelfQualitySection from './-components/self-qualities'
 import "./home.css"
 import MemberShipCard from './-components/membership'
-import Joyride, { type Step } from 'react-joyride'
+import Joyride, { type CallBackProps, type Step } from 'react-joyride'
 import { H3 } from '@/components/ui/typography'
+import { useJoyrideSession } from '@/store/joyride-session'
 
 export const Route = createFileRoute('/(home)/')({
   component: RouteComponent,
@@ -85,14 +86,15 @@ function RouteComponent() {
   //   return hasRunBefore !== "true";
   // });
 
-  // const handleFirstTimeCallback = (data: CallBackProps) => {
-  //   const {status} = data;
+  const {homeRun, setRunState} = useJoyrideSession(state => state);
 
-  //   if (status === 'finished' || status === 'skipped'){
-  //     localStorage.setItem('joyride-run-status', 'true');
-  //     setRunJoy(false);
-  //   }
-  // }
+  const handleSessionCallback = (data: CallBackProps) => {
+    const {status} = data;
+
+    if (status === 'finished' || status === 'skipped'){
+      setRunState("homeRun", false);
+    }
+  }
 
 
 
@@ -105,11 +107,11 @@ function RouteComponent() {
     <MemberShipCard/>
 
     <Joyride 
-    run={true}
+    run={homeRun}
     steps={steps}
     continuous
     showProgress
-    // callback={handleFirstTimeCallback}
+    callback={handleSessionCallback}
     />
 
     <div></div>

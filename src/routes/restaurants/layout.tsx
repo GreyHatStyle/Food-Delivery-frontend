@@ -13,7 +13,8 @@ import {
 import { Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
-import Joyride, {type Step } from 'react-joyride'
+import Joyride, {type CallBackProps, type Step } from 'react-joyride'
+import { useJoyrideSession } from '@/store/joyride-session'
 
 
 
@@ -59,6 +60,16 @@ export const Route = createFileRoute('/restaurants')({
 function LayoutComponent() {
   const [searchInput, setSearchInput] = useState<string>("");
   const { city__iexact, setFilter, search, count, clearFilterState} = useRestaurantFilterStore2(state => state);
+  const {restaurantRun, setRunState} = useJoyrideSession(state => state);
+
+  const handleSessionCallback = (data: CallBackProps) => {
+    const {status} = data;
+    
+    if (status === 'skipped' || status === 'finished'){
+      setRunState("restaurantRun", false);
+    }
+  }
+
 
   // to clean up search filter after component unmounts (was searching for pizza again in different city)
   useEffect( () => {
@@ -128,8 +139,8 @@ function LayoutComponent() {
       showProgress
       steps={steps}
       continuous
-      run
-      
+      run={restaurantRun}
+      callback={handleSessionCallback}
       />
       
       <Outlet />
