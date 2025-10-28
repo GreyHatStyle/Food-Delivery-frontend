@@ -46,7 +46,9 @@ function RestaurantsList({
     >
     
 
-    <div className="m-4 restaurant-list-grid justify-items-center md:justify-items-normal">
+    <div 
+    id="restaurant-list-component"
+    className="m-4 restaurant-list-grid justify-items-center md:justify-items-normal">
       {
         myData.results.map((restaurant, index) => (
           <RestaurantCard 

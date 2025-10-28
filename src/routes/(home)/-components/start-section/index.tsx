@@ -26,13 +26,7 @@ function StartSection() {
   const { isMobileDevice } = useIsMobile();
   const {cities} = useCitiesQuery();
   const navigate = useNavigate();
-
-
-  // function press_button(){
-  //   console.log("pressed button!!: local city: ", selectedCity);
-  //   setCurrentCity(selectedCity);
-  //   console.log("Global city: ", city);
-  // }
+  
 
   return (
     <div id="start-section" 
@@ -55,10 +49,12 @@ function StartSection() {
           
           <p className="text-[0.8rem] xs:text-sm sm:text-[1rem]">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum a qui totam assumenda, veritatis, quod, id atque ut facilis sunt dolores cumque asperiores fugiat culpa vitae esse sit unde! Magnam, ab sint!</p>
 
-          <div className="relative h-[4em]">
+          <div 
+          className="relative h-[4em]">
 
             {/* Did z-5 because  button was coming over Command component for some reason*/}
             <Command 
+            id="city-search-component"
             className="absolute top-0 left-0 mt-6 max-w-[32rem] border md:min-w-[450px] h-auto z-5">
 
               <CommandInput 
@@ -112,10 +108,6 @@ function StartSection() {
 
 
           <div className="mt-4 flex flex-col sm:flex-row items-center gap-1 lg:gap-3 xl:gap-5 lg:mt-7">
-            {/* <Button 
-            onClick={() => press_button()}
-            className="px-8 sm:px-16 sm:py-4"
-            variant={"default"}>Delivery</Button> */}
 
             <Button 
             disabled={!cities.includes(selectedCity)}
@@ -132,10 +124,6 @@ function StartSection() {
               
             }}
             className="px-8 sm:px-16 sm:py-1.5 disabled:bg-black"
-            
-            // search={{
-            //   city__iexact: `${selectedCity}`,
-            // }}
             >
               
               Delivery

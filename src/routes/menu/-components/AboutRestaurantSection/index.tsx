@@ -3,6 +3,7 @@ import { MdStars } from "react-icons/md";
 import DealBox from "./discount-cards";
 
 interface AboutRestaurantSectionProps {
+  id: string,
   title: string,
   rating: number,
   rating_count: string,
@@ -11,6 +12,7 @@ interface AboutRestaurantSectionProps {
 }
 
 function AboutRestaurantSection({
+  id,
   title,
   rating,
   rating_count,
@@ -25,7 +27,9 @@ function AboutRestaurantSection({
   // const address = "Pa Ji Family Restro, 85/355 Laxmi purwa duputy padav, Saina Purwa, Cooperganj, Kanpur, Uttar Pradesh 208003"
 
   return (
-    <div className="m-3 sm:m-11 flex flex-col gap-5 ">
+    <div 
+    id={id}
+    className="m-3 sm:m-11 flex flex-col gap-5 ">
       <H2 className="font-bold">{title}</H2>
 
       <div id="about-restaurant"

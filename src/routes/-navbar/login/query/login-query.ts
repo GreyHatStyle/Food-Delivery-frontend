@@ -20,7 +20,7 @@ export function useLoginQuery(setDialogOpen: (val: boolean) => void){
 
             setTokens(data.tokens);
 
-            console.log("Success!! data: ", data);
+            // console.log("Success!! data: ", data);
 
             setDialogOpen(false);
         },

@@ -9,11 +9,14 @@ declare module '@tanstack/react-router' {
   }
 }
 
+
 function App() {
   const router = useGetRouter();
   
   return (
+    <div>
       <RouterProvider router={router} />
+    </div>
   )
 }
 

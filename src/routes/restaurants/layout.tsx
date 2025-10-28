@@ -13,7 +13,44 @@ import {
 import { Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
+import Joyride, {type Step } from 'react-joyride'
 
+
+
+const steps: Step[] = [
+  {
+    target: 'body',
+    title: "Restaurants View Page",
+    content: 'Here you can view the restaurants of the city you have selected',
+    placement: 'center' as const,
+    showSkipButton: true,
+  },
+  {
+    title: "Food Search Bar",
+    target: '#search-food-component',
+    content: 'You can enter any food name here, and backend will find the restaurants, that serves it.',
+    placement: "bottom",
+    disableScrolling: true,
+    disableBeacon: true,
+    showSkipButton: true,
+  },
+  {
+    title: "Filters",
+    target: '#filter-component',
+    content: 'Using this filter component you can filter your searched restaurants more according to "ratings", "average price", etc..',
+    placement: "bottom",
+    disableScrolling: true,
+    disableBeacon: true,
+  },
+  {
+    title: "Restaurants",
+    target: '#restaurant-list-component',
+    content: 'After Searching or filtering please select any one restaurant to view the menu',
+    placement: "top",
+    disableScrolling: true,
+    disableBeacon: true,
+  },
+];
 
 export const Route = createFileRoute('/restaurants')({
   component: LayoutComponent,
@@ -22,11 +59,8 @@ export const Route = createFileRoute('/restaurants')({
 function LayoutComponent() {
   const [searchInput, setSearchInput] = useState<string>("");
   const { city__iexact, setFilter, search, count, clearFilterState} = useRestaurantFilterStore2(state => state);
-  
-  
-  // console.log("Zustand search val: ", search);
 
-  // to clean up after component unmounts
+  // to clean up search filter after component unmounts (was searching for pizza again in different city)
   useEffect( () => {
     return () => {
       setFilter("search", undefined)
@@ -36,7 +70,7 @@ function LayoutComponent() {
 
   return (
 
-    <div className='flex flex-col gap-3'>
+    <div id="restaurant-page" className='flex flex-col gap-3'>
     <div id="search-food"
     className='variable-margin bg-web-theme-ylgn-light rounded-t-2xl border-2 border-[#E7E8DE]'
     >
@@ -51,7 +85,7 @@ function LayoutComponent() {
         >{search && `(Results for ${search})`}</p>
       </div>
 
-      <form 
+      <form id='search-food-component'
       onSubmit={(e) => {
         e.preventDefault();
         setFilter("search", searchInput);
@@ -84,9 +118,19 @@ function LayoutComponent() {
         Restaurants with online food delivery in {city__iexact}
       </H2>
 
-      <div id="Filters" className="px-5 py-3">
-        <RestaurantFilters />
+      <div id="filters" className="px-5 py-3">
+        <RestaurantFilters 
+        buttonTriggerId='filter-component'
+        />
       </div>
+      
+      <Joyride 
+      showProgress
+      steps={steps}
+      continuous
+      run
+      
+      />
       
       <Outlet />
     </div>

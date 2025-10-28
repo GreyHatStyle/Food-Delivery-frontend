@@ -9,7 +9,7 @@ interface RecommendedCardProps{
     foodName: string,
     imgUrl: string,
     price: number,
-    foodType: "V" | "NV"
+    foodType: "V" | "NV",
 }
 
 function RecommendedCard({
@@ -17,11 +17,11 @@ function RecommendedCard({
     imgUrl,
     price,
     foodType,
-    key,
+    ...props
 }: RecommendedCardProps & ComponentProps<"div">) {
   return (
     <div 
-    key={key}
+    key={props.key}
     className="relative overflow-hidden rounded-md max-w-[260px] sm:max-w-[350px]">
 
         <img 

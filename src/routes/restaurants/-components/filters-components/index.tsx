@@ -20,8 +20,13 @@ import { useNavigate } from "@tanstack/react-router"
 export type FilterSection = "rating" | "averageCost" | "ratingCount" | "cuisine"
 
 
-function RestaurantFilters() {
+function RestaurantFilters({
+  buttonTriggerId,
+}: {
+  buttonTriggerId: string,
+}) {
     const [filterSection, setFilterSection] = useState<FilterSection>("rating");
+    const [isFilterOpen, openFilter] = useState<boolean>(false);
 
     const {getFilterState, clearFilterState} = useRestaurantFilterStore2(state => state);
 
@@ -29,10 +34,10 @@ function RestaurantFilters() {
     // console.log("This console is from Selecting filters!!!!: ", getFilterState());
 
   return (
-     <Dialog>
+     <Dialog open={isFilterOpen} onOpenChange={openFilter}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline" className="border-web-theme-green border-2">Filter</Button>
+          <Button id={buttonTriggerId} variant="outline" className="border-web-theme-green border-2">Filter</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[50rem] z-200 gap-0">
             
@@ -108,9 +113,13 @@ function RestaurantFilters() {
                 >Clear Filters</Button>
                 
                 <Button
-                onClick={()=> navigate({
-                  search: () => getFilterState(),
-                })}
+                onClick={()=> {
+                  navigate({
+                    search: () => getFilterState(),
+                  })
+                  openFilter(false);
+              }
+              }
                 >Apply</Button>
             </div>
         </DialogContent>

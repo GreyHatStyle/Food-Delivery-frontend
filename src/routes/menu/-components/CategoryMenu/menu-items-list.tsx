@@ -27,7 +27,7 @@ function MenuItemsList({
         className='py-2'
         >Menu Items</H3>
 
-        <div id="categories"
+        <div id="categories-component"
         className='inline-flex gap-3 py-4 flex-wrap'
         >
             {

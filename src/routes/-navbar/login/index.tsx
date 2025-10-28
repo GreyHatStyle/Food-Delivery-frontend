@@ -30,13 +30,13 @@ export function Login() {
       <form
       >
         <DialogTrigger asChild>
-          <Button variant="outline" className="px-[2rem]">Sign up</Button>
+          <Button variant="outline" className="px-[2rem]">Login</Button>
         </DialogTrigger>
         <DialogContent 
         className="sm:max-w-[425px] z-220">
 
             <DialogHeader>
-              <DialogTitle className="text-2xl">Sign Up</DialogTitle>
+              <DialogTitle className="text-2xl">Log In</DialogTitle>
               <DialogDescription>
                 You can use following dummy <b>(test1)</b> to Login and access the <b>Cart</b> and <b>Order</b> Functionality
               </DialogDescription>

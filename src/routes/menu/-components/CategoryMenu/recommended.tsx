@@ -43,7 +43,7 @@ function Recommended({
               className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
               >
                 <RecommendedCard
-                key={index} 
+                key={`r-${index}`} 
                 foodName={food.name}
                 price={food.price}
                 foodType={food.food_type}

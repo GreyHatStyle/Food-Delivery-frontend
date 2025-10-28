@@ -25,10 +25,11 @@ export const useAuthStore = create<AuthStoreType>()(
             },
             setTokens: (data: TokenType) => {
                 set({tokens: data});
-                console.log("Tokens: ", get().tokens);
+                // console.log("Tokens: ", get().tokens);
             },
             verifySession: () => {
                 const user = get().user;
+                // console.log("user: ", user);
                 return user ? true : false;
             },
             logout: () => {
