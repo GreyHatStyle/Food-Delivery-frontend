@@ -1,16 +1,11 @@
+import type { MenuItemsType } from "@/routes/menu/-api/menu-api"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
 export type CartItemType = {
     cart_item_id: number,
     category_name: string,
-    item_data: {
-        item_uuid: string,
-        name: string,
-        price: string,
-        image_url: string,
-        food_type: "V" | "NV",
-    }
+    item_data: MenuItemsType,
     quantity: number,
 }
 
@@ -47,7 +42,8 @@ export const useCartStore = create<CartStoreType>()(
                 })
             },
             setItems: (items_: CartItemType[]) => {
-                console.log('Setting items:', items_);
+                
+                // console.log('Setting items:', items_);
                 set({
                     items: items_,
                 })

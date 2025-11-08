@@ -3,6 +3,7 @@ import axios from "axios";
 
 
 export type MenuItemsType = {
+    item_uuid: string,
     name: string,
     price: number,
     food_type: "V" | "NV",

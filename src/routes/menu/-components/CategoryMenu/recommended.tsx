@@ -14,10 +14,14 @@ import {
 
 interface RecommendedProps{
   recommendedFoods: MenuItemsType[],
+  firstCategory: string,
+  restId: string,
 }
 
 function Recommended({
   recommendedFoods,
+  firstCategory,
+  restId,
 
 }: RecommendedProps) {
 
@@ -30,8 +34,8 @@ function Recommended({
     <div className="sm:variable-margin self-start w-full flex flex-col sm:items-center">
         
         <H3
-        className="my-11 font-bold self-start"
-        >Recommended</H3>
+        className="my-11 sm:ml-20 font-bold self-start"
+        >{firstCategory}</H3>
 
         <Carousel className="recommended-carousel-min-width-fix sm:max-w-dvw">
           <CarouselContent className='my-4 px-11 pr-13'>
@@ -44,10 +48,9 @@ function Recommended({
               >
                 <RecommendedCard
                 key={`r-${index}`} 
-                foodName={food.name}
-                price={food.price}
-                foodType={food.food_type}
-                imgUrl={food.image_url}
+                menu_item={food}
+                category={firstCategory}
+                restId={restId}
                 />
 
               </CarouselItem >

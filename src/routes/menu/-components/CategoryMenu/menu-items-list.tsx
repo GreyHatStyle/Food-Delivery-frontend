@@ -55,10 +55,9 @@ function MenuItemsList({
                 categoryMenuData?.map( (menuItem, index) => (
                     <MenuCard 
                     key={index}
-                    foodName={menuItem.name}
-                    cost={menuItem.price}
-                    foodType={menuItem.food_type}
-                    imgUrl={menuItem.image_url}
+                    menu_item={menuItem}
+                    category={currentCategory || catReceived || ""}
+                    restId={restId}
                     />
 
                 ))

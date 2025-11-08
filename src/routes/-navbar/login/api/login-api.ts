@@ -6,7 +6,7 @@ import type { TokenType } from "../schema/token";
 const finalUrl = `${env.VITE_PUBLIC_SERVER_URL}/account/api/v1/login/`;
 
 export type LoginApiResponse = {
-    status: "success" | "fail" | "exception",
+    status: "success" | "error" | "exception",
     message: "string",
     user: UserType,
     tokens: TokenType,

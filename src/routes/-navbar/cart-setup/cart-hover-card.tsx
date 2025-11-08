@@ -13,17 +13,22 @@ import { ShoppingBagIcon } from "lucide-react"
 import { useCartQuery } from "./cart-get-query"
 import { useCartStore } from "@/store/cart-store"
 import { useAuthStore } from "@/store/auth-store"
+import { useNavigate } from "@tanstack/react-router"
 
 
 function CartHoverCard() {
 
-    const {items, restaurant_name} = useCartStore(state => state);
-    const {data, isError, error, refetch, status} = useCartQuery();
+    const {items, restaurant_name, restaurant_id} = useCartStore(state => state);
+    const {data, isError, error, status} = useCartQuery();
     const {user} = useAuthStore(state => state);
+
+    const navigate = useNavigate();
 
     if(isError){
         console.log("Cart api error: ", error);
     }
+
+    // console.log("Cart Data: ", data);
 
   return (
     <HoverCard>
@@ -34,9 +39,12 @@ function CartHoverCard() {
       </HoverCardTrigger>
 
     
-      <HoverCardContent 
+      <HoverCardContent
+
+      // Did this complex logic because, even though cart items was empty the api was still returning successfully response, with 
+      // empty c_items list
       style={{
-        display: (user && status === "success") ? "block" : "none"
+        display: (user && status === "success" && data.results?.c_items.length!== 0) ? "block" : "none"
       }}
       className="w-100 z-120 " 
       sideOffset={20}
@@ -47,12 +55,19 @@ function CartHoverCard() {
         >
             <img 
             className="size-20"
-            src={data?.results?.c_items[0].item_data.image_url} alt="restaurant image" />
+            src={data?.results?.c_items[data.results.c_items.length-1]?.item_data.image_url} alt="restaurant image" />
 
             <div>
                 <H4>{restaurant_name}</H4>
                 <p className="text-neutral-500 text-sm" >Race Course</p>
-                <Button variant={"link"} className="text-blue-600 pl-0" >View Full Menu</Button>
+                <Button 
+                variant={"link"} className="text-blue-600 pl-0" 
+                onClick={() => navigate({
+                  to: `/menu/${restaurant_id}`
+                })}
+                >
+                  View Full Menu
+                </Button>
             </div>
 
         </div>
@@ -84,19 +99,18 @@ function CartHoverCard() {
                 <p className="text-neutral-400" >Extra Charges may apply</p>
             </div>
 
-            <H3>&#8377;{data?.results?.total_price}</H3>
+            <H3>&#8377;{data?.results?.total_price.toFixed(2)}</H3>
         </div>
 
         <Button
         className="rounded-none w-full p-2"
-        onClick={() => refetch()}
         >CHECKOUT</Button>
 
       </HoverCardContent>
 
       <HoverCardContent
       style={{
-        display: (user && status === "error") ? "block" : "none",
+        display: ((user && status === "error") || (data?.results?.c_items.length === 0)) ? "block" : "none",
       }}
       >
 

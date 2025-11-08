@@ -45,8 +45,9 @@ function Menubar() {
           onClick={() => {
             logout();
             clearCart();
-            // did this navigate because the login component wasn't changing as per verifySession's boolean value
-            window.location.href = "/"
+            // did this {refresh technique} because the login component wasn't changing as per verifySession's boolean value, 
+            const location = window.location.href;
+            window.location.href = location;
           }}
           >Logout</Button>
 

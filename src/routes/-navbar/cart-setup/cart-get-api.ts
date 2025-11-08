@@ -24,7 +24,7 @@ export async function GetCartAPI(){
     const auth_data = useAuthStore.getState();
 
     if (!auth_data.verifySession()){
-        throw new Error("The User is not logged in or authenticated!!");
+        throw new Error("Kindly Login to perform this action!!");
     }
 
     const response = await authAxiosInstance.get<CartApiResponseType>(url);

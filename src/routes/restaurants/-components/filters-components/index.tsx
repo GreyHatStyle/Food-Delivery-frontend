@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { H2 } from "@/components/ui/typography"
 import { useState } from "react"
 import RatingFilter from "./rating-filter"
 import AvgCostFilter from "./avg-cost"
@@ -41,7 +41,8 @@ function RestaurantFilters({
         </DialogTrigger>
         <DialogContent className="sm:max-w-[50rem] z-200 gap-0">
             
-            <H2 className="border-b-1 pb-3"> Filter </H2>
+            {/* <H2 className="border-b-1 pb-3"> Filter </H2> */}
+            <DialogTitle className="text-3xl border-b-1 pb-3"> Filter</DialogTitle>
 
             <div className="filter-grid-responsive ">
                 <aside className="flex flex-col gap-3 side border-r-1 border-gray-300">

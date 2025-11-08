@@ -30,6 +30,8 @@ function CategoryMenu({
       </div>      
 
       <Recommended 
+      restId={restId}
+      firstCategory={categories? categories[0] : "Recommended"}
       recommendedFoods={recomFoodItems}
       />
 

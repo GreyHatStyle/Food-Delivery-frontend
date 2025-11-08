@@ -44,17 +44,40 @@ function Button({
   variant,
   size,
   asChild = false,
+  // onClick,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
   }) {
   const Comp = asChild ? Slot : "button"
+  
+  // const compRef = React.useRef<HTMLButtonElement | null>(null);
+  // const [variantState, setVariantState] = React.useState<
+  //   VariantProps<typeof buttonVariants>['variant']
+  // >(variant);
+  
+  //   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+  //     // basically, if variant if addMenuCart then only perform this action
+  //     if (variant === "addMenuCart"){
+  //       console.log("Add menu cart is triggered");
+  //       setVariantState("default");
+  //     }
+
+
+  //     // otherwise perform whatever you are told to perform
+  //     if (onClick){
+  //       onClick(event);
+  //     }
+  //   }
 
   return (
     <Comp
+      // ref={compRef}
+      // onClick={handleClick}
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant: variant, size, className }))}
       {...props}
     />
   )

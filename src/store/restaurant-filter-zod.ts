@@ -9,7 +9,17 @@ type AllowedNonLookupFieldType = typeof allowedNonLookupFields[number];
 const allowedLookups = ["lte", "gte", "iexact"] as const;
 type AllowedLookupType = typeof allowedLookups[number];
 
-const allowedCuisines = ["North Indian", "South Indian", "Chinese", "Pizzas", "Sweets",  "American", "Bakery", "Desserts"];
+const allowedCuisines = [
+    "North Indian", 
+    "South Indian", 
+    "Chinese", 
+    "Pizzas", 
+    "Sweets",  
+    "American", 
+    "Bakery", 
+    "Desserts", 
+    "Italian American"
+];
 
 const ValueQuerySchema = z.union([z.string(), z.number(), z.array(z.union([z.number(), z.string()]))]);
 
