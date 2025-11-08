@@ -6,42 +6,24 @@ import {
 } from "@/components/ui/hover-card"
 import Line from "@/components/ui/line"
 import NonVegIcon from "@/components/ui/non-veg-icon"
-import { H3, H4 } from "@/components/ui/typography"
+import { H1, H3, H4 } from "@/components/ui/typography"
 import VegIcon from "@/components/ui/veg-icon"
-import { ShoppingBagIcon } from "lucide-react"
 
-type CartItemType = {
-    name: string,
-    quantity: number,
-    price: number,
-    type: "V" | "NV"
-}
+import { ShoppingBagIcon } from "lucide-react"
+import { useCartQuery } from "./cart-get-query"
+import { useCartStore } from "@/store/cart-store"
+import { useAuthStore } from "@/store/auth-store"
+
 
 function CartHoverCard() {
-    const restName = "Burger King";
-    const cartItems: CartItemType[] = [
-        {
-            name: "Paneer Tikka",
-            quantity: 2,
-            price: 300.00,
-            type: "V"
-        },
-        {
-            name: "Big Chicken burger",
-            quantity: 2,
-            price: 200.00,
-            type: "NV",
-        },
-        {
-            name: "Double Cheese Burger",
-            quantity: 3,
-            price: 700.00,
-            type: "V",
-        },
-    ];
 
-    const total_price = 1200.00;
+    const {items, restaurant_name} = useCartStore(state => state);
+    const {data, isError, error, refetch, status} = useCartQuery();
+    const {user} = useAuthStore(state => state);
 
+    if(isError){
+        console.log("Cart api error: ", error);
+    }
 
   return (
     <HoverCard>
@@ -51,7 +33,11 @@ function CartHoverCard() {
         </Button>
       </HoverCardTrigger>
 
+    
       <HoverCardContent 
+      style={{
+        display: (user && status === "success") ? "block" : "none"
+      }}
       className="w-100 z-120 " 
       sideOffset={20}
       align="end"
@@ -61,10 +47,10 @@ function CartHoverCard() {
         >
             <img 
             className="size-20"
-            src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/2025/3/20/cd4cfb8f-a2dd-4af7-a662-7bab15cf0494_1064266.jpg" alt="restaurant image" />
+            src={data?.results?.c_items[0].item_data.image_url} alt="restaurant image" />
 
             <div>
-                <H4>{restName}</H4>
+                <H4>{restaurant_name}</H4>
                 <p className="text-neutral-500 text-sm" >Race Course</p>
                 <Button variant={"link"} className="text-blue-600 pl-0" >View Full Menu</Button>
             </div>
@@ -75,16 +61,16 @@ function CartHoverCard() {
 
         <div className="flex flex-col p-2 gap-3 text-sm text-neutral-700 mb-3">
             {
-                cartItems.map((item, index) => (
+                items.map((item, index) => (
                     <div 
                     key={index}
                     className="inline-flex items-start">
                         {
-                            item.type === "V" ? <VegIcon/> : <NonVegIcon/>
+                            item.item_data.food_type === "V" ? <VegIcon/> : <NonVegIcon/>
                         }
 
-                        <p className="pl-11 flex-1 pt-1"> {item.name} X {item.quantity} </p>
-                        <p>&#8377;{item.price}</p>
+                        <p className="pl-11 flex-1 pt-1"> {item.item_data.name} X {item.quantity} </p>
+                        <p>&#8377;{item.item_data.price}</p>
                     </div>
                 ))
             }
@@ -98,12 +84,33 @@ function CartHoverCard() {
                 <p className="text-neutral-400" >Extra Charges may apply</p>
             </div>
 
-            <H3>&#8377;{total_price}</H3>
+            <H3>&#8377;{data?.results?.total_price}</H3>
         </div>
 
         <Button
         className="rounded-none w-full p-2"
+        onClick={() => refetch()}
         >CHECKOUT</Button>
+
+      </HoverCardContent>
+
+      <HoverCardContent
+      style={{
+        display: (user && status === "error") ? "block" : "none",
+      }}
+      >
+
+        <H1>Cart Is Empty</H1>
+
+      </HoverCardContent>
+
+      <HoverCardContent
+      style={{
+        display: (!user) ? "block" : "none",
+      }}
+      >
+
+        <H3>Please Click on Login button, and login with user <b>test1</b> to use this cart feature</H3>
 
       </HoverCardContent>
 

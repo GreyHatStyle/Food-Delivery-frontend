@@ -23,6 +23,7 @@ export function useLoginQuery(setDialogOpen: (val: boolean) => void){
             // console.log("Success!! data: ", data);
 
             setDialogOpen(false);
+            window.location.href = "/";
         },
         onError: (error) => {
             if(axios.isAxiosError(error) && error.response?.data?.message){

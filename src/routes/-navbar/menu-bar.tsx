@@ -5,16 +5,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import CartHoverCard from "./cart-hover-card";
+import CartHoverCard from "./cart-setup/cart-hover-card";
 import { Login } from "./login";
 import { useAuthStore } from "@/store/auth-store";
-import { useNavigate } from "@tanstack/react-router";
+import { useCartStore } from "@/store/cart-store";
 
 
 function Menubar() {
 
   const {verifySession, user, logout} = useAuthStore(state => state);
-  const navigate = useNavigate();
+  const {clearCart} = useCartStore(state => state);
 
 
   return (
@@ -44,10 +44,9 @@ function Menubar() {
           variant={"outline"}
           onClick={() => {
             logout();
+            clearCart();
             // did this navigate because the login component wasn't changing as per verifySession's boolean value
-            navigate({
-              to: "/",
-            });
+            window.location.href = "/"
           }}
           >Logout</Button>
 
