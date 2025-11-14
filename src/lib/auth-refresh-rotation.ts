@@ -22,7 +22,7 @@ authAxiosInstance.interceptors.request.use((config) => {
 authAxiosInstance.interceptors.response.use(
     (response) => {
         // Object.assign(response.data, {"brother": "what are you doing"})
-        console.log("The interceptor response: ", response);
+        // console.log("The interceptor response: ", response);
         return response;
     },
     async (error) => {

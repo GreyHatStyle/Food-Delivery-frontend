@@ -43,7 +43,7 @@ export const useCartStore = create<CartStoreType>()(
             },
             setItems: (items_: CartItemType[]) => {
                 
-                // console.log('Setting items:', items_);
+                // console.log('Setting items after refetch in Zustand:', items_);
                 set({
                     items: items_,
                 })

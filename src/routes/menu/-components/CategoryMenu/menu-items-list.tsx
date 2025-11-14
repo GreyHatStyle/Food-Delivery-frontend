@@ -54,7 +54,9 @@ function MenuItemsList({
             {
                 categoryMenuData?.map( (menuItem, index) => (
                     <MenuCard 
-                    key={index}
+                    // FIX: Added item_uuid in key because, changing category was not changing the state of ADD button
+                    // in different menu item, (0th row chole bhature in Thali Category was showing added even though it wasn't).
+                    key={`${index}-${menuItem.item_uuid}`}
                     menu_item={menuItem}
                     category={currentCategory || catReceived || ""}
                     restId={restId}

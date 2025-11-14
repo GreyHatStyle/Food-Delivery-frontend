@@ -14,6 +14,25 @@ import { useCartQuery } from "./cart-get-query"
 import { useCartStore } from "@/store/cart-store"
 import { useAuthStore } from "@/store/auth-store"
 import { useNavigate } from "@tanstack/react-router"
+import { cn } from "@/lib/utils"
+
+interface CartBadgeProps {
+    count: number;
+    className?: string;
+}
+
+export function CartBadge({ count, className }: CartBadgeProps) {
+    if (count === 0) return null;
+    
+    return (
+        <span className={cn(
+            "absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold animate-in zoom-in-75",
+            className
+        )}>
+            {count > 99 ? '99+' : count}
+        </span>
+    );
+}
 
 
 function CartHoverCard() {
@@ -33,8 +52,9 @@ function CartHoverCard() {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Button>
+        <Button className="relative">
             <ShoppingBagIcon />
+            <CartBadge count={items.length} />
         </Button>
       </HoverCardTrigger>
 

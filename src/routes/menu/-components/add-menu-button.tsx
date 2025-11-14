@@ -1,10 +1,9 @@
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils';
-import { useMemo, type ComponentProps } from 'react';
+import { useEffect, useState, type ComponentProps } from 'react';
 import type { CartItemAddRemoveApi_BodyType } from '../-api/cart-item-add-remove-api';
 import type { useCartItemQuery } from '../-query/cart-item-query';
 import type { CartItemType } from '@/store/cart-store';
-
 
 
 interface AddMenuButtonProps{
@@ -20,23 +19,31 @@ function AddMenuButton({
     className,
     ...props
 }: AddMenuButtonProps & ComponentProps<"button">) {
+    
+    // FIX: In Prod this component was giving latency on updating menu button state,
+    // fixed it to first update state -> then call api -> then use response data to re-update state.
+    // Advantage:
+    //    1. User will see instant update in selected item.
+    //    2. Same item in Recommended Carousel component's button will also be updated.
+    const [quantity, setQuantity] = useState<number>(0);
 
-    const quantity = useMemo(() => {
+    useEffect(() => {
         const foundItem = items.find((item) => {
             return item.item_data.item_uuid === data.item_uuid
         })
         
         if (items.length === 0){
-            return 0;
+            setQuantity(0);
         }
 
         if (foundItem){
             // console.log("item: ", foundItem);
-            return foundItem.quantity;
+            // return foundItem.quantity;
+            setQuantity(foundItem.quantity);
         }
 
-        return 0;
     }, [items, data.item_uuid]);
+
     
   return (
     <>
@@ -49,6 +56,8 @@ function AddMenuButton({
     }}
 
     onClick={() => {
+        setQuantity(prev => prev + 1);
+        console.log("Data to go after clicking => ", data);
         mutate({
             category: data.category,
             item_uuid: data.item_uuid,
@@ -75,13 +84,16 @@ function AddMenuButton({
         variant={"ghost"}
 
         onClick={() => {
+            setQuantity(prev => prev - 1);
+            console.log("Remove Mode");
+            console.log("Data to go after clicking => ", data);
             mutate({
                 category: data.category,
                 item_uuid: data.item_uuid,
                 restaurant_id: data.restaurant_id,
                 mode: "remove",
             })
-
+            
         }}
         >-</Button>
         
@@ -92,15 +104,17 @@ function AddMenuButton({
         variant={"ghost"}
         onClick={() => {
             // do something
-                mutate({
+            setQuantity(prev => prev + 1);
+            console.log("Add Mode");
+            console.log("Data to go after clicking => ", data);
+            mutate({
                 category: data.category,
                 item_uuid: data.item_uuid,
                 restaurant_id: data.restaurant_id,
                 mode: "add",
             })
-
         }}
-
+        
         >+</Button>
     
     </div>
