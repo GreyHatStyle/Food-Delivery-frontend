@@ -12,10 +12,12 @@ export type CartItemType = {
 type CartStoreType = {
     restaurant_id: string,
     restaurant_name: string,
+    restaurant_image: string | null,
     items: CartItemType[] | [],
 
     setRestaurantName: (rest_name: string) => void,
     setRestaurantId: (rest_id: string) => void,
+    setRestaurantImage: (image_url: string) => void,
     setItems: (items: CartItemType[]) => void,
     addItem: (item: CartItemType) => void,
     removeItem: (cart_item_id: number) => void,
@@ -29,6 +31,7 @@ export const useCartStore = create<CartStoreType>()(
             items: [],
             restaurant_id: "",
             restaurant_name: "",
+            restaurant_image: null,
             
             setRestaurantName: (rest_name) => {
                 set({
@@ -41,6 +44,13 @@ export const useCartStore = create<CartStoreType>()(
                     restaurant_id: rest_id,
                 })
             },
+            
+            setRestaurantImage: (image_url) => {
+                set({
+                    restaurant_image: image_url,
+                })
+            },
+
             setItems: (items_: CartItemType[]) => {
                 
                 // console.log('Setting items after refetch in Zustand:', items_);

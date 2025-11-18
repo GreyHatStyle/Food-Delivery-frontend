@@ -14,6 +14,10 @@ type CartApiResponseType = {
         total_price: number,
         c_items: CartItemType[],        
         restaurant_name: string,
+        service_charges: {
+            [key: string]: number, // services charges are variable (like rain charges won't come when not raining)
+        },
+        to_pay: number,
     } | undefined
 }
 
@@ -26,9 +30,10 @@ export async function GetCartAPI(){
     if (!auth_data.verifySession()){
         throw new Error("Kindly Login to perform this action!!");
     }
-
+    
     const response = await authAxiosInstance.get<CartApiResponseType>(url);
-
+    console.log("Ran api cart get: ", response.data);
+    
     return response.data;
 
 }

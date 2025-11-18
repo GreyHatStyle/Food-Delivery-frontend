@@ -9,13 +9,14 @@ import CartHoverCard from "./cart-setup/cart-hover-card";
 import { Login } from "./login";
 import { useAuthStore } from "@/store/auth-store";
 import { useCartStore } from "@/store/cart-store";
+import { useLocation } from "@tanstack/react-router";
 
 
 function Menubar() {
 
   const {verifySession, user, logout} = useAuthStore(state => state);
   const {clearCart} = useCartStore(state => state);
-
+  const {pathname} = useLocation();
 
   return (
     <div className="flex flex-row gap-5 items-center">
@@ -56,8 +57,10 @@ function Menubar() {
         <Login />
         }
 
-
-        <CartHoverCard />
+        {
+          !(pathname==="/checkout") && <CartHoverCard />
+        }
+        
 
         <Tooltip>
         <TooltipTrigger asChild>

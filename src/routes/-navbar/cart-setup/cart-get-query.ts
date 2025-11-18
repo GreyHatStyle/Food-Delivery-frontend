@@ -5,7 +5,7 @@ import { useEffect } from "react"
 
 
 export function useCartQuery(){
-    const {setItems, setRestaurantId, setRestaurantName} = useCartStore(state => state)
+    const {setItems, setRestaurantId, setRestaurantName, setRestaurantImage} = useCartStore(state => state)
     
     const query = useQuery({
         queryKey: ['cart-items'],
@@ -23,6 +23,9 @@ export function useCartQuery(){
             setRestaurantId(query.data.results.restaurant);
             setRestaurantName(query.data.results.restaurant_name);
             
+            if(query.data.results.c_items.length > 0){
+                setRestaurantImage(query.data.results.c_items[0].item_data.image_url);
+            }
         }
 
     }, [query.dataUpdatedAt])

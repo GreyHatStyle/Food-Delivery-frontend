@@ -12,12 +12,19 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/ui/password-inp"
-import { useState } from "react"
+import { useState, type ComponentProps } from "react"
 import { useLoginQuery } from "./query/login-query"
 import { Spinner } from "@/components/ui/spinner"
+import { cn } from "@/lib/utils"
 
 
-export function Login() {
+
+export function Login({
+  variant,
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof Button>) {
 
   const [username, setUsername] = useState<string>("test1");
   const [password, setPassword] = useState<string>("test1pass");
@@ -27,10 +34,18 @@ export function Login() {
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-      <form
+      <form className={cn("", className)}
       >
         <DialogTrigger asChild>
-          <Button variant="outline" className="px-[2rem]">Login</Button>
+
+          <Button 
+          {...props}
+          variant={variant} className="px-[2rem] flex-1">
+            {children}
+            Login
+            
+            </Button>
+
         </DialogTrigger>
         <DialogContent 
         className="sm:max-w-[425px] z-220">

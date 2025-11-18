@@ -52,7 +52,11 @@ function CartHoverCard() {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Button className="relative">
+        <Button className="relative"
+        onClick={() => navigate({
+          to: "/checkout"
+        })}
+        >
             <ShoppingBagIcon />
             <CartBadge count={items.length} />
         </Button>
@@ -124,6 +128,9 @@ function CartHoverCard() {
 
         <Button
         className="rounded-none w-full p-2"
+        onClick={() => navigate({
+          to: "/checkout"
+        })}
         >CHECKOUT</Button>
 
       </HoverCardContent>

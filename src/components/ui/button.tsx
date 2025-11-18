@@ -20,7 +20,7 @@ const buttonVariants = cva(
           "bg-secondary text-green-600 font-bold hover:bg-secondary/80 rounded-md",
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+        link: "text-blue-600 underline-offset-4 hover:underline",
         sideMenu: "hover:bg-web-theme-green hover:text-background rounded-sm "
       },
       size: {

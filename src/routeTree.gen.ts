@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RestaurantsLayoutRouteImport } from './routes/restaurants/layout'
+import { Route as CheckoutPageRouteImport } from './routes/checkout/page'
 import { Route as homePageRouteImport } from './routes/(home)/page'
 import { Route as MenuIdRouteImport } from './routes/menu/$id'
 import { Route as RestaurantsFiltersPageRouteImport } from './routes/restaurants/filters/page'
@@ -18,6 +19,11 @@ import { Route as RestaurantsmainPagePageRouteImport } from './routes/restaurant
 const RestaurantsLayoutRoute = RestaurantsLayoutRouteImport.update({
   id: '/restaurants',
   path: '/restaurants',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutPageRoute = CheckoutPageRouteImport.update({
+  id: '/checkout/',
+  path: '/checkout/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const homePageRoute = homePageRouteImport.update({
@@ -45,12 +51,14 @@ export interface FileRoutesByFullPath {
   '/restaurants': typeof RestaurantsLayoutRouteWithChildren
   '/menu/$id': typeof MenuIdRoute
   '/': typeof homePageRoute
+  '/checkout': typeof CheckoutPageRoute
   '/restaurants/': typeof RestaurantsmainPagePageRoute
   '/restaurants/filters': typeof RestaurantsFiltersPageRoute
 }
 export interface FileRoutesByTo {
   '/menu/$id': typeof MenuIdRoute
   '/': typeof homePageRoute
+  '/checkout': typeof CheckoutPageRoute
   '/restaurants': typeof RestaurantsmainPagePageRoute
   '/restaurants/filters': typeof RestaurantsFiltersPageRoute
 }
@@ -59,6 +67,7 @@ export interface FileRoutesById {
   '/restaurants': typeof RestaurantsLayoutRouteWithChildren
   '/menu/$id': typeof MenuIdRoute
   '/(home)/': typeof homePageRoute
+  '/checkout/': typeof CheckoutPageRoute
   '/restaurants/(main-page)/': typeof RestaurantsmainPagePageRoute
   '/restaurants/filters/': typeof RestaurantsFiltersPageRoute
 }
@@ -68,15 +77,17 @@ export interface FileRouteTypes {
     | '/restaurants'
     | '/menu/$id'
     | '/'
+    | '/checkout'
     | '/restaurants/'
     | '/restaurants/filters'
   fileRoutesByTo: FileRoutesByTo
-  to: '/menu/$id' | '/' | '/restaurants' | '/restaurants/filters'
+  to: '/menu/$id' | '/' | '/checkout' | '/restaurants' | '/restaurants/filters'
   id:
     | '__root__'
     | '/restaurants'
     | '/menu/$id'
     | '/(home)/'
+    | '/checkout/'
     | '/restaurants/(main-page)/'
     | '/restaurants/filters/'
   fileRoutesById: FileRoutesById
@@ -85,6 +96,7 @@ export interface RootRouteChildren {
   RestaurantsLayoutRoute: typeof RestaurantsLayoutRouteWithChildren
   MenuIdRoute: typeof MenuIdRoute
   homePageRoute: typeof homePageRoute
+  CheckoutPageRoute: typeof CheckoutPageRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -94,6 +106,13 @@ declare module '@tanstack/react-router' {
       path: '/restaurants'
       fullPath: '/restaurants'
       preLoaderRoute: typeof RestaurantsLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/': {
+      id: '/checkout/'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutPageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(home)/': {
@@ -144,6 +163,7 @@ const rootRouteChildren: RootRouteChildren = {
   RestaurantsLayoutRoute: RestaurantsLayoutRouteWithChildren,
   MenuIdRoute: MenuIdRoute,
   homePageRoute: homePageRoute,
+  CheckoutPageRoute: CheckoutPageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

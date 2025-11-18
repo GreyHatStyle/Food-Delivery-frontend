@@ -1,5 +1,7 @@
 import { ChevronRight, Heart, Home, ShoppingBagIcon, User, UserCog} from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Login } from "./login"
+import { useNavigate } from "@tanstack/react-router"
 
 interface SideBarProps{
     sideBarClosed: boolean,
@@ -10,6 +12,8 @@ function SideBar({
     sideBarClosed,
     setCloseSidebar,
 }: SideBarProps) {
+
+    const navigate = useNavigate();
     
   return (
     <div 
@@ -23,10 +27,33 @@ function SideBar({
             <ChevronRight/>
         </button>
 
-        <Button variant={"sideMenu"}><Home/> Home </Button>
+        <Button 
+        variant={"sideMenu"}
+        onClick={() => {
+            navigate({
+                to: "/",
+            })
+            setCloseSidebar(true);
+        }}
+        ><Home/> Home </Button>
         <Button variant={"sideMenu"}><UserCog/> Help </Button>
-        <Button variant={"sideMenu"}><User/> Sign In</Button>
-        <Button variant={"sideMenu"}><ShoppingBagIcon/> Cart</Button>
+        {/* <Button variant={"sideMenu"}><User/> Sign In</Button> */}
+        
+        <Login 
+        variant={"sideMenu"} 
+        children={<User/>} className="inline-flex" 
+        onClick={() => setCloseSidebar(true)}
+        />
+        <Button 
+        variant={"sideMenu"}
+        onClick={() => {
+            navigate({
+                to: "/checkout",
+            })
+            setCloseSidebar(true);
+        }}
+        ><ShoppingBagIcon/> Cart</Button>
+        
         <Button variant={"sideMenu"}> <Heart/> Favorites</Button>
 
     </div>
