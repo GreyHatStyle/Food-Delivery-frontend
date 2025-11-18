@@ -31,7 +31,6 @@ function BillDetails({
             className="inline-flex justify-between w-full">
                 {/* Formatting the key coming from python to a Displayable format */}
                 <p>{serviceName.charAt(0).toUpperCase() + serviceName.slice(1).replace("_", " ")}: </p> 
-
                 <p>&#8377;{servicePrice}</p>
             </div>
 

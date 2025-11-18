@@ -2,13 +2,17 @@ import { useQuery } from "@tanstack/react-query"
 import { GetCartAPI } from "./cart-get-api"
 import { useCartStore } from "@/store/cart-store"
 import { useEffect } from "react"
+import { useAuthStore } from "@/store/auth-store";
 
+export const getCartQueryKey = (userId: string | undefined) => [userId, 'cart-items'];
 
 export function useCartQuery(){
-    const {setItems, setRestaurantId, setRestaurantName, setRestaurantImage} = useCartStore(state => state)
-    
+    const {setItems, setRestaurantId, setRestaurantName, setRestaurantImage} = useCartStore(state => state);
+    const {user} = useAuthStore(state => state);
+    const queryKey = getCartQueryKey(user?.id);
+
     const query = useQuery({
-        queryKey: ['cart-items'],
+        queryKey: queryKey,
         queryFn: GetCartAPI,
         staleTime: 60000,
         refetchOnWindowFocus: false,

@@ -2,7 +2,9 @@
 
 function Payment() {
   return (
-    <div>Payment</div>
+    <div className="bg-white p-4">
+      Payment
+      </div>
   )
 }
 

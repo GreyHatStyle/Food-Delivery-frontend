@@ -89,9 +89,13 @@ function RouteComponent() {
   const {homeRun, setRunState} = useJoyrideSession(state => state);
 
   const handleSessionCallback = (data: CallBackProps) => {
-    const {status} = data;
+    const {status, action} = data;
 
     if (status === 'finished' || status === 'skipped'){
+      setRunState("homeRun", false);
+    }
+
+    if (action === 'close'){
       setRunState("homeRun", false);
     }
   }

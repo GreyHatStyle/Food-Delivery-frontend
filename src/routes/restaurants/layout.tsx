@@ -63,9 +63,13 @@ function LayoutComponent() {
   const {restaurantRun, setRunState} = useJoyrideSession(state => state);
 
   const handleSessionCallback = (data: CallBackProps) => {
-    const {status} = data;
+    const {status, action} = data;
     
     if (status === 'skipped' || status === 'finished'){
+      setRunState("restaurantRun", false);
+    }
+
+    if (action === 'close'){
       setRunState("restaurantRun", false);
     }
   }

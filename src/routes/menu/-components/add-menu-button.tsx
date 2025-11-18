@@ -57,7 +57,7 @@ function AddMenuButton({
 
     onClick={() => {
         setQuantity(prev => prev + 1);
-        console.log("Data to go after clicking => ", data);
+        // console.log("Data to go after clicking => ", data);
         mutate({
             category: data.category,
             item_uuid: data.item_uuid,
@@ -86,7 +86,7 @@ function AddMenuButton({
         onClick={() => {
             setQuantity(prev => prev - 1);
             console.log("Remove Mode");
-            console.log("Data to go after clicking => ", data);
+            // console.log("Data to go after clicking => ", data);
             mutate({
                 category: data.category,
                 item_uuid: data.item_uuid,
@@ -106,7 +106,7 @@ function AddMenuButton({
             // do something
             setQuantity(prev => prev + 1);
             console.log("Add Mode");
-            console.log("Data to go after clicking => ", data);
+            // console.log("Data to go after clicking => ", data);
             mutate({
                 category: data.category,
                 item_uuid: data.item_uuid,

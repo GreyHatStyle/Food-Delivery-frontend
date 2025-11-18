@@ -16,7 +16,7 @@ function BillToPay() {
     const {mutate} = useCartItemQuery(restaurant_id);
     const navigate = useNavigate();
 
-    const {data, isError, error, status} = useCartQuery();
+    const {data} = useCartQuery();
     
     
 
