@@ -9,7 +9,7 @@ export type CartItemAddRemoveApi_BodyType = {
     mode: "add" | "remove",
 }
 
-type CartItemAddRemoveApi_Response = {
+export type CartItemAddRemoveApi_Response = {
     id: number,
     item_uuid: string,
     category: string,

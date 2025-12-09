@@ -55,18 +55,18 @@ function StartSection() {
             {/* Did z-5 because  button was coming over Command component for some reason*/}
             <Command 
             id="city-search-component"
-            className="absolute top-0 left-0 mt-6 max-w-[32rem] border md:min-w-[450px] h-auto z-5">
+            className="absolute top-0 left-0 mt-6 max-w-[32rem] border md:min-w-[450px] h-auto z-5"
+            >
 
               <CommandInput 
               input_value={selectedCity}
               result_count_show={!isMobileDevice ? `${cities.length} cities` : ""}
               onBlur={() => {
-                // Did this specific time out to solve glitch 
-                // On clicking one of command item, the Whole list was closing even before adding it to state, so made this function
-                // slow on purpose to first let the value go to "selectedCity" state, and then close it
-                setTimeout(() => {
-                  setOpenSearchBox(false);
-                }, 200)
+                // removed the setTimeOut function, because waiting for program to updated selectedCity state was device dependent,
+                // and was not updating in some devices, "The 200ms gap was not enough for slow devices",
+                // while "More than 200ms was visually slower for fast devices", so not a good choice
+                setOpenSearchBox(false);
+
               }}
 
               onFocus={() => setOpenSearchBox(true)}
@@ -86,9 +86,14 @@ function StartSection() {
                     {
                       cities.map((city, index) => (
                         <CommandItem 
-                          onSelect={() => {
-                            // setOpenSearchBox(false);
+                          // shifted from 'onSelect' to 'onMouseDown' to deal with a bug, onBlur was running before onSelect here somehow, 
+                          // because of which searchBox was closing down with selecting the city and updating state, even though clicked.
+                          // to deal with this used onMouseDown() with preventing default event behavior.
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            
                             setSelectedCity(city);
+                            setOpenSearchBox(false);
                           }}
 
                           key={index}

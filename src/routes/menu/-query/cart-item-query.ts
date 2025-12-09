@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { cartItemAddRemoveAPI } from "../-api/cart-item-add-remove-api";
+import { cartItemAddRemoveAPI} from "../-api/cart-item-add-remove-api";
 import { useCartStore } from "@/store/cart-store";
 import axios from "axios";
 import { getCartQueryKey } from "@/routes/-navbar/cart-setup/cart-get-query";
@@ -29,7 +29,6 @@ export function useCartItemQuery(currentRestId: string){
             queryClient.invalidateQueries({queryKey: cartQueryKey})
             console.log("Cart item is updated!! with data: ", data);
         },
-
         onError: (error) => {
             if(axios.isAxiosError(error) && error.response?.data.message){
                 alert(error.response.data.message);
