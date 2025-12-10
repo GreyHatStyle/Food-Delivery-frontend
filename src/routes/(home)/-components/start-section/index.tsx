@@ -33,7 +33,7 @@ function StartSection() {
     className="relative rounded-2xl bg-[#E7E8DE] flex justify-around xl:w-[75rem]">
 
          <ToastContainer 
-         
+         position="bottom-left"
          />
 
         <img 

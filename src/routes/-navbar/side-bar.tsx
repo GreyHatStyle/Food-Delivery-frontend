@@ -1,7 +1,8 @@
-import { ChevronRight, Heart, Home, ShoppingBagIcon, User, UserCog} from "lucide-react"
+import { ChevronRight, Heart, Home, LogOut, ShoppingBagIcon, User, UserCog} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Login } from "./login"
 import { useNavigate } from "@tanstack/react-router"
+import { useAuthStore } from "@/store/auth-store";
 
 interface SideBarProps{
     sideBarClosed: boolean,
@@ -14,6 +15,7 @@ function SideBar({
 }: SideBarProps) {
 
     const navigate = useNavigate();
+    const {logout, user} = useAuthStore(state => state);
     
   return (
     <div 
@@ -39,11 +41,29 @@ function SideBar({
         <Button variant={"sideMenu"}><UserCog/> Help </Button>
         {/* <Button variant={"sideMenu"}><User/> Sign In</Button> */}
         
-        <Login 
-        variant={"sideMenu"} 
-        children={<User/>} className="inline-flex" 
-        onClick={() => setCloseSidebar(true)}
-        />
+        {
+            !user ?
+            <Login 
+            variant={"sideMenu"} 
+            children={<User/>} className="inline-flex" 
+            onClick={() => setCloseSidebar(true)}
+            />
+
+            :
+
+            <Button 
+            variant={"sideMenu"}
+            onClick={() => {
+                logout();
+                setCloseSidebar(true);
+            }}
+            >
+                <LogOut/>
+                Logout
+            </Button>
+        }
+
+
         <Button 
         variant={"sideMenu"}
         onClick={() => {

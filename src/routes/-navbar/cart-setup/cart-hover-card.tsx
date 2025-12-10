@@ -84,9 +84,12 @@ function CartHoverCard() {
             <div>
                 <H4>{restaurant_name}</H4>
                 <p className="text-neutral-500 text-sm" >Race Course</p>
+                {/* Using "onMouseDown" instead of "onClick" because using "onClick" it closes the dialog box and doesn't perform action,
+                what I need is immediate action, "onClick" uses both (onMouseDown and onMouseUp) together, hence using onMouseDown instead.
+                */}
                 <Button 
                 variant={"link"} className="text-blue-600 pl-0" 
-                onClick={() => navigate({
+                onMouseDown={() => navigate({
                   to: `/menu/${restaurant_id}`
                 })}
                 >
@@ -128,7 +131,7 @@ function CartHoverCard() {
 
         <Button
         className="rounded-none w-full p-2"
-        onClick={() => navigate({
+        onMouseDown={() => navigate({
           to: "/checkout"
         })}
         >CHECKOUT</Button>

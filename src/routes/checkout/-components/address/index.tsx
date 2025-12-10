@@ -4,22 +4,17 @@ import SingleAddress from "./single-address-type";
 import { MdOutlineAddLocationAlt } from "react-icons/md";
 import "./address.css"
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useUserAddressStore } from "@/store/user-address-store";
 
-export const selectedAddressLocalKey = 'selected-address';
+
 
 function Address() {
   const {data} = useGetAddressQuery();
-  
-  const [selectedAddressID, setSelectedAddressID] = useState<number | null>(() => {
-    
-    // Used local storage directly because I don't want to create a whole Zustand just to stored address's id :)
-    // It will find the previously selected address by user in local storage.
-    // And it uses direct database id of server, so there is no chance of ambiguous address selection in different users. 
-    const savedIndex = localStorage.getItem(selectedAddressLocalKey);
 
-    return savedIndex ? parseInt(savedIndex) : null;
-  });
+  // removed the useState() using zustand instead (for payment page to access the address too)
+  // It will find the previously selected address by user in local storage.
+  // And it uses direct database id of server, so there is no chance of ambiguous address selection in different users. 
+  const {addressIndex, setAddressId} = useUserAddressStore(state => state);
   
   return (
     <div className="bg-white p-6 flex flex-col gap-5">
@@ -30,15 +25,14 @@ function Address() {
         {
           data?.results.map((address, index) => (
             <SingleAddress 
-            isNoneSelected={selectedAddressID === null}
+            isNoneSelected={addressIndex === null}
             time={"15 mins"}
             key={`${address.pin_code}-${index}`}
             address={address}
-            isSelected={selectedAddressID === address.id}
+            isSelected={addressIndex === address.id}
             buttonProps={{
               onClick: () => {
-                setSelectedAddressID(address.id)
-                localStorage.setItem(selectedAddressLocalKey, address.id.toString())
+                setAddressId(address.id);
               }
             }}
             />
@@ -48,7 +42,7 @@ function Address() {
 
         <div className="border flex flex-row  gap-3 m-2 p-6 cursor-pointer hover:shadow-md transition-all duration-300"
         style={{
-          display: (selectedAddressID !== null) ? "none" : "flex",
+          display: (addressIndex !== null) ? "none" : "flex",
         }}
         
         >
@@ -69,13 +63,12 @@ function Address() {
        
       </div>
 
-      {selectedAddressID !== null && (
+      {addressIndex !== null && (
         <Button 
         variant="outline"
         className="rounded-md mx-2"
         onClick={() => {
-          setSelectedAddressID(null);
-          localStorage.removeItem(selectedAddressLocalKey);
+          setAddressId(null);
         }
         
         } 
