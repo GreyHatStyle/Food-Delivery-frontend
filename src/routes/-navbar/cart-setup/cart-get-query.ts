@@ -18,7 +18,6 @@ export function useCartQuery(){
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         retry: 2,
-
     })
     
     useEffect(() => {

@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { H4 } from "@/components/ui/typography"
 import { useState } from "react"
+import { PaymentProcessDialogButton } from "./payment-process-dialog"
 
 const handleCardInputFormat = (value: string, setCardNum: (val: string) => void): void => {
     const cleanValue = value.replace(/\D/g, ' ');
@@ -45,9 +45,11 @@ function CardPayment({
 
             </div>
 
-          <Button
-          className="rounded-md"
-          >Pay &#8377;{to_pay} with UPI</Button>
+          <PaymentProcessDialogButton
+          buttonClassName="rounded-md w-full"
+          >
+            Pay &#8377;{to_pay} with UPI
+          </PaymentProcessDialogButton>
 
         </div>
 

@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button'
 import { H4 } from '@/components/ui/typography'
+import { PaymentProcessDialogButton } from './payment-process-dialog'
 
 
 function Cod({
@@ -15,9 +15,12 @@ function Cod({
         <H4>Pay on Delivery (Cash or UPI)</H4>
         <p className="text-neutral-500 text-sm">Pay cash or ask for QR Code</p>
         </div>
-        <Button
-        className="rounded-md"
-        >Pay &#8377;{to_pay} with Cash</Button>
+      
+        <PaymentProcessDialogButton
+          buttonClassName="rounded-md w-full"
+          >
+            Pay &#8377;{to_pay} with Cash
+          </PaymentProcessDialogButton>
         </div>
   )
 }

@@ -4,6 +4,7 @@ import { useEffect, useState, type ComponentProps } from 'react';
 import type { CartItemAddRemoveApi_BodyType } from '../-api/cart-item-add-remove-api';
 import type { useCartItemQuery } from '../-query/cart-item-query';
 import type { CartItemType } from '@/store/cart-store';
+import { useAuthStore } from '@/store/auth-store';
 
 
 interface AddMenuButtonProps{
@@ -26,6 +27,7 @@ function AddMenuButton({
     //    1. User will see instant update in selected item.
     //    2. Same item in Recommended Carousel component's button will also be updated.
     const [quantity, setQuantity] = useState<number>(0);
+    const {user} = useAuthStore(state => state);
 
     useEffect(() => {
         const foundItem = items.find((item) => {
@@ -56,14 +58,19 @@ function AddMenuButton({
     }}
 
     onClick={() => {
-        setQuantity(prev => prev + 1);
-        // console.log("Data to go after clicking => ", data);
-        mutate({
-            category: data.category,
-            item_uuid: data.item_uuid,
-            restaurant_id: data.restaurant_id,
-            mode: "add",
-        })
+        if (user){
+            setQuantity(prev => prev + 1);
+            // console.log("Data to go after clicking => ", data);
+            mutate({
+                category: data.category,
+                item_uuid: data.item_uuid,
+                restaurant_id: data.restaurant_id,
+                mode: "add",
+            })
+        }
+        else {
+            alert("Please Click on Login button, to continue this action!!");
+        }
     }}
     
     >ADD</Button>
