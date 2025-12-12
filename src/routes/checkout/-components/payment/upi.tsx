@@ -2,6 +2,8 @@ import { Input } from "@/components/ui/input"
 import { H4 } from "@/components/ui/typography"
 import { useState } from "react"
 import { PaymentProcessDialogButton } from "./payment-process-dialog"
+import { useUserAddressStore } from "@/store/user-address-store"
+import { usePaymentOrderQuery } from "./payment-order-query-api"
 
 
 function UPI({
@@ -10,7 +12,8 @@ function UPI({
     to_pay: number | undefined
 }) {
   const [upiId, setUpiId] = useState<string>("test1_tttgggtt@abcdbank");
-
+  const {addressStoredId} = useUserAddressStore(state => state);
+  const {mutate} = usePaymentOrderQuery();
   return (
     <div id="upi-payment"
       className="p-7 border-1 gap-5 flex flex-col-reverse lg:flex-row"
@@ -28,6 +31,12 @@ function UPI({
           ></Input>
 
           <PaymentProcessDialogButton
+          order_fn={mutate}
+          data_for_fn={{
+            user_address_id: addressStoredId || 1,
+            payment_type: "UPI",
+          }}  
+          to_pay={to_pay}
           buttonClassName="rounded-md w-full"
           >
             Pay &#8377;{to_pay} with UPI

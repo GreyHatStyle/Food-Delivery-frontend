@@ -8,7 +8,7 @@ import { useUserAddressStore } from "@/store/user-address-store";
 
 function Payment() {
   const {data} = useCartQuery();
-  const {addressIndex} = useUserAddressStore(state => state);
+  const {addressStoredId: addressIndex} = useUserAddressStore(state => state);
 
   return (
     <div className="bg-white p-6 flex flex-col gap-5">

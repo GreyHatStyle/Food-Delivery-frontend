@@ -14,7 +14,7 @@ function Address() {
   // removed the useState() using zustand instead (for payment page to access the address too)
   // It will find the previously selected address by user in local storage.
   // And it uses direct database id of server, so there is no chance of ambiguous address selection in different users. 
-  const {addressIndex, setAddressId} = useUserAddressStore(state => state);
+  const {addressStoredId, setAddressId} = useUserAddressStore(state => state);
   
   return (
     <div className="bg-white p-6 flex flex-col gap-5">
@@ -23,13 +23,13 @@ function Address() {
       <div className="address-list-grid">
 
         {
-          data?.results.map((address, index) => (
+          data?.results.map((address) => (
             <SingleAddress 
-            isNoneSelected={addressIndex === null}
+            isNoneSelected={addressStoredId === null}
             time={"15 mins"}
-            key={`${address.pin_code}-${index}`}
+            key={`${address.pin_code}-${address.id}`}
             address={address}
-            isSelected={addressIndex === address.id}
+            isSelected={addressStoredId === address.id}
             buttonProps={{
               onClick: () => {
                 setAddressId(address.id);
@@ -42,7 +42,7 @@ function Address() {
 
         <div className="border flex flex-row  gap-3 m-2 p-6 cursor-pointer hover:shadow-md transition-all duration-300"
         style={{
-          display: (addressIndex !== null) ? "none" : "flex",
+          display: (addressStoredId !== null) ? "none" : "flex",
         }}
         
         >
@@ -63,7 +63,7 @@ function Address() {
        
       </div>
 
-      {addressIndex !== null && (
+      {addressStoredId !== null && (
         <Button 
         variant="outline"
         className="rounded-md mx-2"

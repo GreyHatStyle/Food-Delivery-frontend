@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware"
 
 
 type AddressStoreType = {
-    addressIndex: number | null,
+    addressStoredId: number | null,
     setAddressId: (value: number | null) => void,
 }
 
@@ -12,8 +12,8 @@ type AddressStoreType = {
 export const useUserAddressStore = create<AddressStoreType>()(
     persist(
         (set) => ({
-            addressIndex: null,
-            setAddressId: (value) => set({addressIndex: value})
+            addressStoredId: null,
+            setAddressId: (value) => set({addressStoredId: value})
         }),
         {
             name: "selected-address"

@@ -4,32 +4,42 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { StatefulComponent } from "@/components/ui/stateful-button"
+import { StatefulComponent } from "@/components/ui/stateful-component"
 import { H1, H4 } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import { useNavigate } from "@tanstack/react-router"
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { useCartDeleteQuery } from "./clear-cart-query-api"
+import type { PaymentApiDataType, usePaymentOrderQuery } from "./payment-order-query-api"
 
 interface PPDialogButProps{
     buttonClassName: string,
+    to_pay: number | undefined,
+    order_fn: ReturnType<typeof usePaymentOrderQuery>['mutate'],
+    data_for_fn: PaymentApiDataType,
     children?: ReactNode,
 }
 
- const handleClick = () => {
+ const mutateAndWait = () => {
     return new Promise(() => {
-        // setTimeout(() => setPaymentStatus("Completed Payment!!"), 2000);
+        // setTimeout(() => order_mutate_fn(data), 2000);
+        
         // setPaymentStatus("Completed Payment!!")
 
         // This is confusing I know, for now just think of it like
         // 1. This handle click returns promise
         // 2. As soon as its opened Stateful Component uses useEffect() such that it loads animation.
         // 3. setIsOpen() function here plays main role to control the stateFul component from parent (this current one).
+
+        // BUG: This function might not be doing 'nothing', please check it
     });
 };
 
 export function PaymentProcessDialogButton({
     buttonClassName,
+    to_pay,
+    order_fn,
+    data_for_fn,
     children,
 }: PPDialogButProps) {
 
@@ -54,18 +64,20 @@ export function PaymentProcessDialogButton({
         <DialogTrigger asChild>
           <Button 
           onClick={() => {
-            setPaymentStatus("Processing Payment")
+            setPaymentStatus("Processing Payment");
+            console.log("Entered to order mutate data: ", data_for_fn);
+            order_fn(data_for_fn);
         }}
           className={cn("", buttonClassName)}
           >{children}</Button>
         </DialogTrigger>
         
-        <DialogContent className="sm:max-w-[425px] min-h-[325px] z-1000 h-[65dvh]">
+        <DialogContent className="sm:max-w-[425px] min-h-[325px] z-1000 h-[70dvh]">
           
           <div className="flex flex-col gap-2">
             <StatefulComponent
             className="flex-1"
-            onClick={handleClick}
+            onClick={() => mutateAndWait}
             ref={buttonRef}
             setPaymentStatus={setPaymentStatus}
             >
@@ -74,7 +86,7 @@ export function PaymentProcessDialogButton({
                 
             <H1
             className="text-xl sm:text-3xl"
-            >{paymentStatus}</H1>
+            >{paymentStatus} <br></br> &#8377;{to_pay}</H1>
 
             {
                 paymentStatus === "Completed Payment!!" &&
