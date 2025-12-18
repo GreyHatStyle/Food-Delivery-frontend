@@ -16,6 +16,9 @@ export function useLoginQuery(setDialogOpen: (val: boolean) => void){
                 id: data.user.id,
                 username: data.user.username,
                 email: data.user.email,
+                first_name: data.user.first_name,
+                last_name: data.user.last_name,
+                phone_no: data.user.phone_no,
             });
 
             setTokens(data.tokens);

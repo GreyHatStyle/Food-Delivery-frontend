@@ -32,7 +32,7 @@ export async function GetCartAPI(){
     }
     
     const response = await authAxiosInstance.get<CartApiResponseType>(url);
-    console.log("Ran api cart get: ", response.data);
+    // console.log("Ran api cart get: ", response.data);
     
     return response.data;
 

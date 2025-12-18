@@ -42,7 +42,7 @@ function RestaurantCard({
         <div className="overflow-hidden rounded-2xl self-center">
             <img 
             className="object-cover object-center scale-140 hover:scale-100 transition-all"
-            src={image} alt="" />
+            src={image !== "no_url_image" ? image : "/placeholder.png"} alt="" />
 
         </div>
 

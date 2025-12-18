@@ -39,7 +39,7 @@ function CartHoverCard() {
 
     const {items, restaurant_name, restaurant_id} = useCartStore(state => state);
     const {data, isError, error, status} = useCartQuery();
-    console.log("Data in cart hover: ", data);
+    // console.log("Data in cart hover: ", data);
     
     const {user} = useAuthStore(state => state);
 

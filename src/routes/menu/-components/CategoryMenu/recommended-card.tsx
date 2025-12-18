@@ -12,12 +12,14 @@ interface RecommendedCardProps{
     menu_item: MenuItemsType,
     category: string,
     restId: string,
+    menu_items_length: number,
 }
 
 function RecommendedCard({
     menu_item,
     category,
     restId,
+    menu_items_length,
     ...props
 }: RecommendedCardProps & ComponentProps<"div">) {
 
@@ -27,11 +29,16 @@ function RecommendedCard({
   return (
     <div 
     key={props.key}
+    // Fixed: Carousel Item shrinking bug for less number of items (large width screen)
+    style={{
+        minHeight: menu_items_length <= 3 ? "240px" : "0px",
+        minWidth: menu_items_length <= 3 ? "280px" : "0px",
+    }}
     className="relative overflow-hidden rounded-md max-w-[260px] sm:max-w-[350px]">
 
         <img 
         className="object-cover scale-150"
-        src={menu_item.image_url} alt="" />
+        src={menu_item.image_url !== "no_url_image" ? menu_item.image_url : "/placeholder.png"} alt="" />
 
         <div 
         className="absolute top-0 left-0 h-full w-full bg-black/50 z-20 p-3 flex flex-col justify-between">

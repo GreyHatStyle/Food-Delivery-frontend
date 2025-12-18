@@ -1,4 +1,4 @@
-import { ChevronRight, Heart, Home, LogOut, ShoppingBagIcon, User, UserCog} from "lucide-react"
+import { ChevronRight, Home, LogOut, ShoppingBagIcon, User, User2, UserCog} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Login } from "./login"
 import { useNavigate } from "@tanstack/react-router"
@@ -74,7 +74,12 @@ function SideBar({
         }}
         ><ShoppingBagIcon/> Cart</Button>
         
-        <Button variant={"sideMenu"}> <Heart/> Favorites</Button>
+        <Button variant={"sideMenu"}
+        onClick={() => {
+            navigate({to: "/order-history"});
+            setCloseSidebar(true);
+        }}
+        > <User2/> User Orders</Button>
 
     </div>
   )

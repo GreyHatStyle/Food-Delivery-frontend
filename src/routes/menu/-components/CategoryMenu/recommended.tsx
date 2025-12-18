@@ -44,13 +44,14 @@ function Recommended({
 
               <CarouselItem
               key={index}
-              className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+              className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 "
               >
                 <RecommendedCard
                 key={`r-${index}`} 
                 menu_item={food}
                 category={firstCategory}
                 restId={restId}
+                menu_items_length={recommendedFoods.length}
                 />
 
               </CarouselItem >

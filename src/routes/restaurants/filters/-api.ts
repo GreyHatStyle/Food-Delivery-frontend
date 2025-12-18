@@ -28,7 +28,7 @@ export const getRestaurantsFromCity = async ( searchQueryString: string): Promis
     
     const finalApiUrl = `${apiUrl}/restaurants/api/v1/restaurants/?${searchQueryString}&ordering=-rating&ordering=-rating_count_int`;
 
-    console.log("Final selected API URL: ", finalApiUrl);
+    // console.log("Final selected API URL: ", finalApiUrl);
 
     const response = await axios.get<GetRestaurantFromCityApiResponse>(finalApiUrl);
 

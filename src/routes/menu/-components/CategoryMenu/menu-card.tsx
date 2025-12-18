@@ -52,7 +52,7 @@ function MenuCard({
         <div className='relative overflow-hidden rounded-md max-w-[140px]'>
             <img 
             className='object-cover scale-120'
-            src={menu_item.image_url} alt="" />
+            src={menu_item.image_url !== "no_url_image"? menu_item.image_url : "/placeholder.png"} alt="" />
             
             <AddMenuButton
             className="absolute bottom-2 left-5 sm:left-8 border-2"

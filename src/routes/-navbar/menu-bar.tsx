@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Heart } from "lucide-react"
+import { User } from "lucide-react"
 import {
   Tooltip,
   TooltipContent,
@@ -9,7 +9,7 @@ import CartHoverCard from "./cart-setup/cart-hover-card";
 import { Login } from "./login";
 import { useAuthStore } from "@/store/auth-store";
 import { useCartStore } from "@/store/cart-store";
-import { useLocation } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 
 
 function Menubar() {
@@ -17,6 +17,7 @@ function Menubar() {
   const {verifySession, user, logout} = useAuthStore(state => state);
   const {clearCart} = useCartStore(state => state);
   const {pathname} = useLocation();
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-row gap-5 items-center">
@@ -61,17 +62,21 @@ function Menubar() {
           !(pathname==="/checkout") && <CartHoverCard />
         }
         
-
+        {
+          user &&
         <Tooltip>
         <TooltipTrigger asChild>
-            <Button>
-            <Heart />
+            <Button variant={"outline"} className="hover:bg-web-theme-green hover:text-white"
+            onClick={() => navigate({ to: "/order-history"})}
+            >
+            <User />
             </Button>
         </TooltipTrigger>
         <TooltipContent>
-            <p>Favorites</p>
+            <p>Order History</p>
         </TooltipContent>
         </Tooltip>
+        }
 
 
     </div>

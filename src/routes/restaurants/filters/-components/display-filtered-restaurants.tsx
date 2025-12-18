@@ -61,7 +61,9 @@ function DisplayFilteredRestaurants({
   // console.log("Limit from zustand: ", typeof restState.limit)
   
   return <div>
-    <ToastContainer theme='colored' />
+    <ToastContainer 
+    position='bottom-left'
+    theme='colored' />
 
     {
       isLoading ? (
