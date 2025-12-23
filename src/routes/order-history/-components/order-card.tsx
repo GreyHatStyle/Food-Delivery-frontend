@@ -5,6 +5,9 @@ import { FaCheckCircle } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Line from "@/components/ui/line";
 import { useNavigate } from "@tanstack/react-router";
+import { OrderDrawer } from "./order-drawer";
+import { totalPrice } from "../-utils/total-price";
+
 
 interface OrderCardProps{
   order: OrderType,
@@ -46,9 +49,14 @@ function OrderCard({
                 Delivered On: {date_obj} 
                 <FaCheckCircle className="size-6 text-green-600"/>  
               </p>
-              {/* Did this px-1 for mobile user because "View Details" was little of the alignment (typing it just in case I forgot) */}
-              <Button variant={"link"} className="px-1 sm:p-0 text-green-600 hover:text-black">
-                VIEW DETAILS</Button>
+                
+                {/* Did this px-1 for mobile user because "View Details" was little of the alignment (typing it just in case I forgot) */}
+                <Button  variant={"link"} 
+                className="px-1 sm:p-0 text-green-600 hover:text-black"
+                onClick={() => navigate({to: `/menu/${order.restaurant}`})}
+                >VISIT RESTAURANT</Button>
+
+                
             </div>
 
         </div>
@@ -61,14 +69,14 @@ function OrderCard({
           >{order.item_list.map(item => `${item.name} x ${item.quantity}`).join(",")}</p>
           
             <p className="text-sm font-semibold">
-            Total Paid: ₹{order.item_list.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}
+            Total Paid: &#8377;{totalPrice(order)}
             </p>
 
         </div>
 
-        <Button className="rounded-none"
-        onClick={() => navigate({to: `/menu/${order.restaurant}`})}
-        >Visit Restaurant</Button>
+        <OrderDrawer 
+        order_id={order.id}
+        />
     </div>
   )
 }

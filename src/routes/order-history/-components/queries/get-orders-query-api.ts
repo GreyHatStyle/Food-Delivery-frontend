@@ -13,6 +13,7 @@ export type OrderItemListType = {
   name: string,
   quantity: number,
   price: number,
+  veg: boolean,
 }
 
 export type OrderType = {
@@ -20,6 +21,10 @@ export type OrderType = {
   restaurant_img: string,
   restaurant_name: string,
   item_list: OrderItemListType[],
+  service_charges: {
+    delivery_fee: number,
+    gst_fee: number,
+  },
   created_at: string,
   status: "DEL" | "PEN" | "CAN",
   delivery_address: string,
