@@ -15,13 +15,14 @@ import { useCartStore } from "@/store/cart-store"
 import { useAuthStore } from "@/store/auth-store"
 import { useNavigate } from "@tanstack/react-router"
 import { cn } from "@/lib/utils"
+import { useCartDeleteQuery } from "@/routes/checkout/-components/payment/clear-cart-query-api"
 
 interface CartBadgeProps {
-    count: number;
+    count: number | undefined;
     className?: string;
 }
 
-export function CartBadge({ count, className }: CartBadgeProps) {
+export function CartBadge({ count = 0, className }: CartBadgeProps) {
     if (count === 0) return null;
     
     return (
@@ -37,8 +38,9 @@ export function CartBadge({ count, className }: CartBadgeProps) {
 
 function CartHoverCard() {
 
-    const {items, restaurant_name, restaurant_id} = useCartStore(state => state);
+    const {items, restaurant_name, restaurant_id, clearCart} = useCartStore(state => state);
     const {data, isError, error, status} = useCartQuery();
+    const {mutate: cartClearServer} = useCartDeleteQuery();
     // console.log("Data in cart hover: ", data);
     
     const {user} = useAuthStore(state => state);
@@ -54,13 +56,13 @@ function CartHoverCard() {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Button className="relative"
+        <Button  id="cart-button" className="relative"
         onClick={() => navigate({
           to: "/checkout"
         })}
         >
             <ShoppingBagIcon />
-            <CartBadge count={items.length} />
+            <CartBadge count={data?.results?.c_items.length} />
         </Button>
       </HoverCardTrigger>
 
@@ -72,7 +74,7 @@ function CartHoverCard() {
       style={{
         display: (user && status === "success" && data.results?.c_items.length!== 0) ? "block" : "none"
       }}
-      className="w-100 z-120 " 
+      className="w-100 z-220 " 
       sideOffset={20}
       align="end"
       >
@@ -130,13 +132,22 @@ function CartHoverCard() {
 
             <H3>&#8377;{data?.results?.total_price.toFixed(2)}</H3>
         </div>
-
+        
         <Button
         className="rounded-none w-full p-2"
         onMouseDown={() => navigate({
           to: "/checkout"
         })}
         >CHECKOUT</Button>
+
+        <Button
+        variant={"destructive"}
+        className="rounded-none w-full p-2 mt-2"
+        onMouseDown={() => {
+          clearCart();
+          cartClearServer();
+        }}
+        >CLEAR CART</Button>
 
       </HoverCardContent>
 

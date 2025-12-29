@@ -28,7 +28,8 @@ function Menubar() {
         
         <Button 
         className="px-[2rem]"
-        variant={"ghost"}>Help</Button>
+        onClick={() => navigate({to: "/"})}
+        variant={"ghost"}>Home</Button>
         
         {/* <Button 
         className="px-[2rem] border-2"
@@ -55,7 +56,7 @@ function Menubar() {
 
         </>
         :
-        <Login />
+        <Login id="login-button"/>
         }
 
         {
@@ -66,7 +67,9 @@ function Menubar() {
           user &&
         <Tooltip>
         <TooltipTrigger asChild>
-            <Button variant={"outline"} className="hover:bg-web-theme-green hover:text-white"
+            <Button 
+            id="order-history-button"
+            variant={"outline"} className="hover:bg-web-theme-green hover:text-white"
             onClick={() => navigate({ to: "/order-history"})}
             >
             <User />

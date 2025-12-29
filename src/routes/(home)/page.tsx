@@ -5,7 +5,9 @@ import "./home.css"
 import MemberShipCard from './-components/membership'
 import Joyride, { type CallBackProps, type Step } from 'react-joyride'
 import { H3 } from '@/components/ui/typography'
-import { useJoyrideSession } from '@/store/joyride-session'
+import { useJoyrideStorage } from '@/store/joyride-session'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/(home)/')({
   component: RouteComponent,
@@ -65,38 +67,55 @@ const steps: Step[] = [
   },
   {
     target: '#city-search-component',
-    content: 'Please select one of the city to view restaurants',
+    content: 'Please select one of the city to view restaurants and then click on "Deliver" button',
     placement: "top",
+    disableScrolling: true,
+    disableBeacon: true,
+    spotlightClicks: true,
+
+    // styles: {
+    //   tooltip: {
+    //     backgroundColor: '#fff3cd',
+    //     border: '1px solid #ffeaa7'
+    //   }
+    // }
+  },
+  {
+    target: '#login-button',
+    title: "Login",
+    content: (
+      <>
+        <p className='font-semibold'>Now please login</p>
+        <p>Two <b>demo accounts "test1" and "test2"</b> are provided with following password, to <b>access registered user's features</b>, without your personally registering it</p>
+      </>
+    ),
+    placement: "bottom",
     disableScrolling: true,
     hideFooter: true,
     disableBeacon: true,
-
-    styles: {
-      tooltip: {
-        backgroundColor: '#fff3cd',
-        border: '1px solid #ffeaa7'
-      }
-    }
   },
 ];
 
 function RouteComponent() {
-  // const [runJoyFirstTime, ] = useState<boolean>(() => {
-  //   const hasRunBefore = localStorage.getItem('joyride-run-status');
-  //   return hasRunBefore !== "true";
-  // });
 
-  const {homeRun, setRunState} = useJoyrideSession(state => state);
+  const {homeRun, setRunState} = useJoyrideStorage(state => state);
+  const [stepIndex, setStepIndex] = useState<number>(0);
 
   const handleSessionCallback = (data: CallBackProps) => {
-    const {status, action} = data;
+    const {status, action, index, type} = data;
 
     if (status === 'finished' || status === 'skipped'){
       setRunState("homeRun", false);
+      setStepIndex(0);
+    }
+    
+    if (type === 'step:after' && (action === 'next' || action === 'prev')){
+      setStepIndex(index + (action === 'next' ? 1 : -1));
     }
 
     if (action === 'close'){
       setRunState("homeRun", false);
+      setStepIndex(0);
     }
   }
 
@@ -113,10 +132,22 @@ function RouteComponent() {
     <Joyride 
     run={homeRun}
     steps={steps}
+    stepIndex={stepIndex}
     continuous
     showProgress
     callback={handleSessionCallback}
     />
+    
+    <Button className='fixed bottom-5 right-5 w-20 h-20 bg-black text-white shadow-2xl z-100 hover:scale-110 hover:text-white hover:bg-web-theme-green'
+    variant={"outline"}
+    onClick={() => {
+      setRunState("homeRun", true);
+      setStepIndex(0);
+    }}
+    >
+      <span className='text-wrap'>Take a tour</span>
+    </Button>
+
 
     <div></div>
     

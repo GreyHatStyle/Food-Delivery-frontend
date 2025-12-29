@@ -1,8 +1,10 @@
-import { ChevronRight, Home, LogOut, ShoppingBagIcon, User, User2, UserCog} from "lucide-react"
+import { ChevronRight, Home, LogOut, ShoppingBagIcon, User, User2} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Login } from "./login"
 import { useNavigate } from "@tanstack/react-router"
 import { useAuthStore } from "@/store/auth-store";
+import { CartBadge } from "./cart-setup/cart-hover-card";
+import { useCartQuery } from "./cart-setup/cart-get-query";
 
 interface SideBarProps{
     sideBarClosed: boolean,
@@ -16,6 +18,7 @@ function SideBar({
 
     const navigate = useNavigate();
     const {logout, user} = useAuthStore(state => state);
+    const {data} = useCartQuery();
     
   return (
     <div 
@@ -38,7 +41,7 @@ function SideBar({
             setCloseSidebar(true);
         }}
         ><Home/> Home </Button>
-        <Button variant={"sideMenu"}><UserCog/> Help </Button>
+        {/* <Button variant={"sideMenu"}><UserCog/> Help </Button> */}
         {/* <Button variant={"sideMenu"}><User/> Sign In</Button> */}
         
         {
@@ -66,13 +69,16 @@ function SideBar({
 
         <Button 
         variant={"sideMenu"}
+        className="relative"
         onClick={() => {
             navigate({
                 to: "/checkout",
             })
             setCloseSidebar(true);
         }}
-        ><ShoppingBagIcon/> Cart</Button>
+        >
+            <CartBadge count={data?.results?.c_items.length} className="right-3 top-2"/>
+            <ShoppingBagIcon/> Cart</Button>
         
         <Button variant={"sideMenu"}
         onClick={() => {

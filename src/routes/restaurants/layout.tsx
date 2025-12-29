@@ -14,7 +14,7 @@ import { Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import Joyride, {type CallBackProps, type Step } from 'react-joyride'
-import { useJoyrideSession } from '@/store/joyride-session'
+import { useJoyrideStorage } from '@/store/joyride-session'
 
 
 
@@ -60,13 +60,18 @@ export const Route = createFileRoute('/restaurants')({
 function LayoutComponent() {
   const [searchInput, setSearchInput] = useState<string>("");
   const { city__iexact, setFilter, search, count, clearFilterState} = useRestaurantFilterStore2(state => state);
-  const {restaurantRun, setRunState} = useJoyrideSession(state => state);
+  const {restaurantRun, setRunState} = useJoyrideStorage(state => state);
+  const [stepIndex, setStepIndex] = useState<number>(0);
 
   const handleSessionCallback = (data: CallBackProps) => {
-    const {status, action} = data;
+    const {status, action, type, index} = data;
     
     if (status === 'skipped' || status === 'finished'){
       setRunState("restaurantRun", false);
+    }
+
+    if (type === 'step:after' && (action === 'next' || action === 'prev')){
+      setStepIndex(index + (action === 'next' ? 1 : -1));
     }
 
     if (action === 'close'){
@@ -142,10 +147,21 @@ function LayoutComponent() {
       <Joyride 
       showProgress
       steps={steps}
+      stepIndex={stepIndex}
       continuous
       run={restaurantRun}
       callback={handleSessionCallback}
       />
+
+      <Button className='fixed bottom-5 right-5 w-20 h-20 bg-black text-white shadow-2xl z-100 hover:scale-110 hover:text-white hover:bg-web-theme-green'
+    variant={"outline"}
+    onClick={() => {
+      setRunState("restaurantRun", true);
+      setStepIndex(0);
+    }}
+    >
+      <span className='text-wrap'>Take a tour</span>
+    </Button>
       
       <Outlet />
     </div>

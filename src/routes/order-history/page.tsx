@@ -16,11 +16,33 @@ export const Route = createFileRoute('/order-history/')({
 
   },
   component: RouteComponent,
-})
+});
+
+
 
 function RouteComponent() {
   const {user} = useAuthStore(state => state);
   const {data: orders} = useGetUserOrders();
+
+  //TODO: Add joyride here if required in future
+  // const {menuRun, setRunState} = useJoyrideStorage(state => state);
+  // const [stepIndex, setStepIndex] = useState<number>(0);
+
+  // const handleSessionCallback = (data: CallBackProps) => {
+  //   const {status, action, type, index} = data;
+
+  //   if (status === 'finished' || status === 'skipped'){
+  //     setRunState("menuRun", false);
+  //   }
+
+  //   if (type === 'step:after' && (action === 'next' || action === 'prev')){
+  //     setStepIndex(index + (action === 'next' ? 1 : -1));
+  //   }
+
+  //   if (action === 'close'){
+  //     setRunState("menuRun", false);
+  //   }
+  // }
 
   return (
     <div
@@ -54,6 +76,25 @@ function RouteComponent() {
         }
 
       </section>
+
+      {/* <Joyride 
+      run={menuRun}
+      steps={steps}
+      stepIndex={stepIndex}
+      continuous
+      showProgress
+      callback={handleSessionCallback}
+      />
+
+      <Button className='fixed bottom-5 right-5 w-20 h-20 bg-black text-white shadow-2xl z-100 hover:scale-110 hover:text-white hover:bg-web-theme-green'
+      variant={"outline"}
+      onClick={() => {
+        setRunState("menuRun", true);
+        setStepIndex(0);
+      }}
+      >
+        <span className='text-wrap'>Take a tour</span>
+      </Button> */}
 
 
     </div>

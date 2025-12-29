@@ -3,7 +3,9 @@ import AboutRestaurantSection from './-components/AboutRestaurantSection'
 import CategoryMenu from './-components/CategoryMenu'
 import { useSelectRestaurantQuery } from './-query/rest-menu-query';
 import Joyride, { type CallBackProps, type Step } from 'react-joyride';
-import { useJoyrideSession } from '@/store/joyride-session';
+import { useJoyrideStorage } from '@/store/joyride-session';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 
 export const Route = createFileRoute('/menu/$id')({
@@ -35,12 +37,33 @@ const steps: Step[] = [
     showSkipButton: true,
   },
   {
-    target: "body",
-    title: "Last But Not least",
-    content: "Thanks for visiting website!! I am working on other features like Cart, and Order which will be available soon!!",
-    placement: 'center',
+    target: '#menu-item',
+    title: "Menu Item",
+    content: 'Please Select "Add" Button to add it to menu',
+    placement: "top",
+    disableScrolling: true,
+    disableBeacon: true,
+    spotlightClicks: true,
   },
-]
+  {
+    target: 'body',
+    title: "Cart",
+    content: (
+      <>
+      <p className='font-semibold'>
+        The item has been successfully Added to cart!!
+      </p>
+      <p>
+         Select or hover on button to view it
+      </p>
+      </>
+    ),
+    placement: "center" as const,
+    disableScrolling: true,
+    disableBeacon: true,
+    spotlightClicks: true,
+  },
+];
 
 
 function RouteComponent() {
@@ -48,13 +71,18 @@ function RouteComponent() {
   const { id } = Route.useParams();
   
   const {restaurantData, availableCategories} = useSelectRestaurantQuery({restId: id});
-  const {menuRun, setRunState} = useJoyrideSession(state => state);
+  const {menuRun, setRunState} = useJoyrideStorage(state => state);
+  const [stepIndex, setStepIndex] = useState<number>(0);
 
   const handleSessionCallback = (data: CallBackProps) => {
-    const {status, action} = data;
+    const {status, action, type, index} = data;
 
     if (status === 'finished' || status === 'skipped'){
       setRunState("menuRun", false);
+    }
+
+    if (type === 'step:after' && (action === 'next' || action === 'prev')){
+      setStepIndex(index + (action === 'next' ? 1 : -1));
     }
 
     if (action === 'close'){
@@ -92,10 +120,21 @@ function RouteComponent() {
     <Joyride 
     run={menuRun}
     steps={steps}
+    stepIndex={stepIndex}
     continuous
     showProgress
     callback={handleSessionCallback}
     />
+
+    <Button className='fixed bottom-5 right-5 w-20 h-20 bg-black text-white shadow-2xl z-100 hover:scale-110 hover:text-white hover:bg-web-theme-green'
+    variant={"outline"}
+    onClick={() => {
+      setRunState("menuRun", true);
+      setStepIndex(0);
+    }}
+    >
+      <span className='text-wrap'>Take a tour</span>
+    </Button>
 
   </div>
 }

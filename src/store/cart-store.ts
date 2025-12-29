@@ -21,13 +21,14 @@ type CartStoreType = {
     setItems: (items: CartItemType[]) => void,
     addItem: (item: CartItemType) => void,
     removeItem: (cart_item_id: number) => void,
+    getItemsCount: () => number,
     clearCart: () => void,
 }
 
 
 export const useCartStore = create<CartStoreType>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             items: [],
             restaurant_id: "",
             restaurant_name: "",
@@ -70,10 +71,13 @@ export const useCartStore = create<CartStoreType>()(
                     items: state.items.filter( (item: CartItemType) => item.cart_item_id !== cart_item_id)
                 }))
             },
+
+            getItemsCount: () =>  get().items.length,
+
             clearCart: () => {
                 set({
                     items: [],
-                })
+                });
             }
         }),
         {

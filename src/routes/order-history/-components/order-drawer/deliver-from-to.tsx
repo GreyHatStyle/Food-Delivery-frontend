@@ -25,8 +25,8 @@ function DeliverFromTo({
     <div id="location-to-to" className="relative flex flex-col gap-9">
               
       <div className="inline-flex gap-3">
-        <GoLocation className="size-13"/>
-        <div>
+        <GoLocation className="size-10"/>
+        <div className='flex-1'>
           <H4>{order_details?.order.restaurant_name}</H4>
           <p className="text-sm">{order_details?.restaurant_address}</p>
         </div>

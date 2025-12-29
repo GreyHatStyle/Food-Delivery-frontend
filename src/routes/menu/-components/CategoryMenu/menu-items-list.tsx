@@ -48,12 +48,15 @@ function MenuItemsList({
             }
         </div>
 
-        <div id='menu-list'
+        <div 
         className='flex flex-col gap-3'
         >
             {
                 categoryMenuData?.map( (menuItem, index) => (
                     <MenuCard 
+                    // BUG (potential): Added this id so that react joyride can highlight first MenuCard it gets only, instead of every cards. 
+                    id='menu-item'
+
                     // FIX: Added item_uuid in key because, changing category was not changing the state of ADD button
                     // in different menu item, (0th row chole bhature in Thali Category was showing added even though it wasn't).
                     key={`${index}-${menuItem.item_uuid}`}

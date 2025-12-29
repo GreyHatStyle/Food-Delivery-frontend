@@ -6,6 +6,7 @@ type JoyRideRunStateType = {
     homeRun: boolean,
     restaurantRun: boolean,
     menuRun: boolean,
+    checkoutRun: boolean,
 };
 
 type JoyrideSessionType = {
@@ -16,12 +17,13 @@ type JoyrideSessionType = {
 
 } & JoyRideRunStateType;
 
-export const useJoyrideSession = create<JoyrideSessionType>()(
+export const useJoyrideStorage = create<JoyrideSessionType>()(
     persist(
         (set) => ({
             homeRun: true,
             restaurantRun: true,
             menuRun: true,
+            checkoutRun: true,
 
             setRunState: (key, value) =>
                 (set)({
@@ -31,7 +33,7 @@ export const useJoyrideSession = create<JoyrideSessionType>()(
         }),
         {
             name: "joy-ride-session",
-            storage: createJSONStorage(() => sessionStorage), 
+            storage: createJSONStorage(() => localStorage), 
         }
     )
 )

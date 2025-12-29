@@ -4,14 +4,19 @@ import Cod from "./cod";
 import UPI from "./upi";
 import CardPayment from "./card-payment";
 import { useUserAddressStore } from "@/store/user-address-store";
+import type { ComponentProps } from "react";
 
 
-function Payment() {
+function Payment({
+  ...props
+}: ComponentProps<"div">) {
   const {data} = useCartQuery();
   const {addressStoredId: addressIndex} = useUserAddressStore(state => state);
 
   return (
-    <div className="bg-white p-6 flex flex-col gap-5">
+    <div 
+    {...props}
+    className="bg-white p-6 flex flex-col gap-5">
       <H3>Payment</H3>
       
       {

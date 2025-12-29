@@ -5,10 +5,13 @@ import { MdOutlineAddLocationAlt } from "react-icons/md";
 import "./address.css"
 import { Button } from "@/components/ui/button";
 import { useUserAddressStore } from "@/store/user-address-store";
+import type { ComponentProps } from "react";
 
 
 
-function Address() {
+function Address({
+  ...props
+}: ComponentProps<"div">) {
   const {data} = useGetAddressQuery();
 
   // removed the useState() using zustand instead (for payment page to access the address too)
@@ -17,7 +20,9 @@ function Address() {
   const {addressStoredId, setAddressId} = useUserAddressStore(state => state);
   
   return (
-    <div className="bg-white p-6 flex flex-col gap-5">
+    <div 
+    {...props}
+    className="bg-white p-6 flex flex-col gap-5">
       <H3>Choose a Delivery Address</H3>
 
       <div className="address-list-grid">
@@ -25,6 +30,7 @@ function Address() {
         {
           data?.results.map((address) => (
             <SingleAddress 
+            id='address-section'
             isNoneSelected={addressStoredId === null}
             time={"15 mins"}
             key={`${address.pin_code}-${address.id}`}
