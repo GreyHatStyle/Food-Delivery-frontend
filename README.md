@@ -7,11 +7,14 @@ Developed a food delivery Web app, using Swiggy Restaurant Kaggle dataset having
   - ***Frontend*** is deployed in **Vercel**.
   - ***Backend*** is deployed separately in **Digital Ocean** droplet.
   
-![zomiggy](https://github.com/user-attachments/assets/7254d4d9-d3ae-4c3e-9a9f-1cd875fafe84)
+
+<img width="1900" height="928" alt="image" src="https://github.com/user-attachments/assets/1f213984-2952-45b8-9775-0b22abff7423" />
+
 
 
 ## Table of Contents
 - [Features](#features)
+- [Architecture](#architecture)
 - [Technology Stack](#technology-stack)
 - [Backend RestAPI Docs](#backend-restapi-docs)
 - [Feedback](#feedback)
@@ -22,7 +25,17 @@ Developed a food delivery Web app, using Swiggy Restaurant Kaggle dataset having
 - **Uses decoupled architecture** with RestAPIs, allowing independent development and deployment.
 - **Supports URL queries**, so that the filtered restaurant's URL can be shared with other users to open the same page.
 - **Paginated List** of restaurants is displayed in the frontend.
-- **Timed Caching** for menu items in restaurant menu. 
+- **Timed Caching** for menu items in the restaurant menu. 
+
+## Architecture
+### High-Level Architecture
+<img width="5742" height="4802" alt="zomiggy" src="https://github.com/user-attachments/assets/be5d801d-e213-40a6-9c2b-29d358f253f5" />
+
+### ER Diagram
+![er-zomiggy](https://github.com/user-attachments/assets/1db812e9-9be7-4c02-b39b-83518882d001)
+
+
+
 
 ## Technology Stack
 1. **Tanstack React Router**: Provides file-based and type-safe URLs, with many important hooks and features for navigation, serializing URL params, dynamic routing, etc.
